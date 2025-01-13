@@ -1,43 +1,111 @@
-{% extends 'common/base.html' %}
-
-{% block title %}Customer{% endblock %}
-
+{% extends 'common/base.html' %} {% block title %}Customer{% endblock %} 
 {% block content %}
-    <h2>Using HTMX</h2>
-    <div hx-get="/customer/htmx/" hx-trigger="load" hx-target="#form-container" hx-swap="innerHTML">
+<h2>Using HTMX</h2>
+<div
+  hx-get="/customer/htmx/"
+  hx-trigger="load"
+  hx-target="#form-container"
+  hx-swap="innerHTML"
+></div>
+<div class="d-flex">
+  <div class="w-50 bg-success p-2">
+    <div class="bg-info p-2">
+      <h5>THÔNG TIN KHÁCH HÀNG</h5>
     </div>
-    
-
     <div class="d-flex">
-       <div class="w-50 bg-success p-2">
-        <div class="bg-info p-2">
-          <h5>
-          THÔNG TIN KHÁCH HÀNG
-        </h5>
-        </div>
-        <div class="d-flex">
-          <ul class="nav nav-tabs">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Customer Info 1</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Customer Info 2</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Customer Info 3</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h6 class="bg-info">
-            CUSTOMER INFO
-          </h6>
-        </div>
-       </div>
-       <div class="w-50 bg-warning p-2">Section 2</div>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <button
+            class="tab btn btn-secondary nav-link"
+            type="button"
+            hx-get="{% url 'customer_info' %}"
+            hx-target="#tab-content"
+            hx-swap="innerHTML"
+            hx-trigger="click"
+          >
+            Customer Info
+          </button>
+        </li>
+        <li class="nav-item">
+          <button
+            class="tab btn btn-secondary nav-link"
+            type="button"
+            hx-get="{% url 'contact_info' %}"
+            hx-target="#tab-content"
+            hx-swap="innerHTML"
+            hx-trigger="click"
+          >
+            Contact Info
+          </button>
+        </li>
+        <li class="nav-item">
+          <button
+            class="tab btn btn-secondary nav-link"
+            type="button"
+            hx-get="{% url 'payment_info' %}"
+            hx-target="#tab-content"
+            hx-swap="innerHTML"
+            hx-trigger="click"
+          >
+            Payment Info
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="tab btn btn-secondary nav-link disabled" type="button">
+            Product Info
+          </button>
+        </li>
+        <li class="nav-item">
+          <button
+            class="tab btn btn-secondary nav-link"
+            type="button"
+            hx-get="{% url 'address_info' %}"
+            hx-target="#tab-content"
+            hx-swap="innerHTML"
+            hx-trigger="click"
+          >
+            Address Info
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="tab btn btn-secondary nav-link disabled" type="button">
+            Phone Info
+          </button>
+        </li>
+      </ul>
     </div>
+    <div>
+      <h6 class="bg-info">CUSTOMER INFO</h6>
+    </div>
+    <form hx-post="{% url 'submit_form' %}">
+      {% csrf_token %}
+      <div id="tab-content"></div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  <div class="w-50 bg-warning p-2">Section 2</div>
+</div>
 
+{% endblock %} {% block js %}
+<script>
+  // Highlight the active tab
+  document.body.addEventListener("htmx:beforeRequest", function (event) {
+    document
+      .querySelectorAll(".tab")
+      .forEach((tab) => tab.classList.remove("active"));
+    const activeTab = event.target.closest(".tab");
+    if (activeTab) {
+      activeTab.classList.add("active");
+    }
+  });
+
+  // Set default active tab
+  document.addEventListener("DOMContentLoaded", function () {
+    const firstTab = document.querySelector(".tab");
+    if (firstTab) {
+        firstTab.classList.add("active");
+        firstTab.click(); // Trigger click event on the first tab
+    }
+  });
+</script>
 {% endblock %}

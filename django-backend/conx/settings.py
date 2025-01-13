@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure--iy2*cfowo!907et-b0+8v*6_l#8rown7fkf2hy2*d+^_c1)*1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 THIRD_PARTY_APPS = [
     'django_htmx',
     'bootstrap5',
+    'rest_framework',
 ]
 
 INSTALLED_APPS = [
@@ -43,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.customer_using_htmx',
+    'apps.customer',
 ]
 
 INSTALLED_APPS += THIRD_PARTY_APPS
@@ -135,3 +136,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny'
+    ]
+}

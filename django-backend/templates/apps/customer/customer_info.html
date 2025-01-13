@@ -1,24 +1,63 @@
-<form id="customer-details-form">
-    <div class="input-group mb-3">
-        <label for="basic-url" class="form-label">Name:</label>
-        <!-- <input type="text" id="name" name="name" value="{{ context.info.name }}" required> -->
-        <input type="text" class="form-control" id="name" aria-describedby="basic-addon3 basic-addon4">
+
+    <div class="row">
+        <!-- Left Column -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="customerName">*Tên KH</label>
+                <input type="text" class="form-control" name="customerName" value="{{ context.customerInfo.name }}">
+            </div>
+            <div class="form-group">
+                <label for="gender">Giới tính</label>
+                <select class="form-control" id="gender">
+                    <option {% if context.customerInfo.gender == 'Male' %}selected{% endif %}>Male</option>
+                    <option {% if context.customerInfo.gender == 'Female' %}selected{% endif %}>Female</option>
+                    <option {% if context.customerInfo.gender == 'Other' %}selected{% endif %}>Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="idNumber">CMND</label>
+                <input type="text" class="form-control" name="idNumber" value="{{ context.customerInfo.idNumber }}">
+            </div>
+            <div class="form-group">
+                <label for="dob">Ngày sinh</label>
+                <input type="date" class="form-control" name="dob" value="{{ context.customerInfo.dayOfBirth }}">
+            </div>
+            <div class="form-group">
+                <label for="familyRelation">Family Relation</label>
+                <input type="text" class="form-control" name="familyRelation" value="{{ context.customerInfo.familyRelation }}">
+            </div>
+            <div class="form-group">
+                <label for="agency">Agency</label>
+                <input type="text" class="form-control" id="agency" value="{{ context.customerInfo.agency }}">
+            </div>
+            <div class="form-group">
+                <label for="contractNumber">*Số hợp đồng</label>
+                <input type="text" class="form-control" id="contractNumber" value="{{ context.customerInfo.contractNumber }}">
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="companyName">Tên công ty</label>
+                <input type="text" class="form-control" id="companyName" value="{{ context.customerInfo.companyName }}">
+            </div>
+            <div class="form-group">
+                <label for="companyAddress">Địa chỉ công ty</label>
+                <input type="text" class="form-control" id="companyAddress" value="{{ context.customerInfo.companyAddress }}">
+            </div>
+            <div class="form-group">
+                <label for="companyDistrict">Địa chỉ công ty - Quận/Huyện</label>
+                <input type="text" class="form-control" id="companyDistrict" value="{{ context.customerInfo.companyDistrict }}">
+            </div>
+            <div class="form-group">
+                <label for="companyProvince">Địa chỉ công ty - Tỉnh/TP</label>
+                <input type="text" class="form-control" id="companyProvince" value="{{ context.customerInfo.companyProvince }}">
+            </div>
+            <div class="form-group">
+                <label for="group">Group</label>
+                <input type="text" class="form-control" id="group" value="{{ context.customerInfo.group }}">
+            </div>
+        </div>
     </div>
-    <div>
-        <label for="gender">Gender:</label>
-        <select id="gender" name="gender" required>
-            <option value="Male" {% if user.gender == "Male" %}selected{% endif %}>Male</option>
-            <option value="Female" {% if user.gender == "Female" %}selected{% endif %}>Female</option>
-            <option value="Other" {% if user.gender == "Other" %}selected{% endif %}>Other</option>
-        </select>
-    </div>
-    <div>
-        <label for="id_number">ID Number:</label>
-        <input type="text" id="id_number" name="id_number" value="{{ context.info.id_number }}" required>
-    </div>
-    <div>
-        <label for="day_of_birth">Date of Birth:</label>
-        <input type="date" id="day_of_birth" name="day_of_birth" value="{{ context.info.day_of_birth }}" required>
-    </div>
-    <button type="submit">Submit</button>
-</form>
+    

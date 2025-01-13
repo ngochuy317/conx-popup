@@ -1,0 +1,134 @@
+<div class="row">
+  <!-- Left Column -->
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="loanID">Loan ID</label>
+      <input
+        type="text"
+        class="form-control"
+        id="loanID"
+        placeholder="Nhắc ông Trịnh Phương Nam và"
+        value="{{ context.contactInfo.loanID }}"
+      />
+    </div>
+    <div class="form-group">
+      <label for="contractNumber">Số hợp đồng</label>
+      <input
+        type="text"
+        class="form-control"
+        id="contractNumber"
+        value="{{ context.contactInfo.contractNumber }}"
+      />
+    </div>
+    <div class="form-group">
+      <label for="contractDate">Contract Date</label>
+      <input
+        type="date"
+        class="form-control"
+        id="contractDate"
+        value="{{ context.contactInfo.contractDate }}"
+      />
+    </div>
+    <div class="form-group">
+      <label for="currentAccount">Current Account</label>
+      <input type="text" class="form-control" id="currentAccount" value="{{ context.contactInfo.currentAccount }}"/>
+    </div>
+    <div class="form-group">
+      <label for="dpdCurrent">DPD Current</label>
+      <input type="text" class="form-control" id="dpdCurrent" value="{{ context.contactInfo.dpdCurrent }}" />
+    </div>
+    <div class="form-group">
+      <label for="dpdAssign">DPD Assign</label>
+      <input type="text" class="form-control" id="dpdAssign" value="{{ context.contactInfo.dpdAssign }}" />
+    </div>
+    <div class="form-group">
+      <label for="mob">MOB</label>
+      <input type="text" class="form-control" id="mob" value="{{ context.contactInfo.mob }}" />
+    </div>
+    <div class="form-group">
+      <label for="loanAmount">Số tiền vay</label>
+      <input type="text" class="form-control" id="loanAmount" value="{{ context.contactInfo.loanAmount }}" />
+    </div>
+    <div class="form-group">
+      <label for="loanTerm">Số kỳ hạn vay</label>
+      <input type="text" class="form-control" id="loanTerm" value="{{ context.contactInfo.loanTerm }}" />
+    </div>
+    <div class="form-group">
+      <label for="obsDueNo">OBS Due No</label>
+      <input type="text" class="form-control" id="obsDueNo" value="{{ context.contactInfo.obsDueNo }}" />
+    </div>
+    <div class="form-group">
+      <label for="paymentRequestDate">Ngày đề nghị thanh toán</label>
+      <input
+        type="text"
+        class="form-control"
+        id="paymentRequestDate"
+        value="{{ context.contactInfo.paymentRequestDate }}"
+      />
+    </div>
+    <div class="form-group">
+      <label for="assignInvalidDate">Assign Invalid Date</label>
+      <input type="date" class="form-control" id="assignInvalidDate" value="{{ context.contactInfo.assignInvalidDate }}"/>
+    </div>
+  </div>
+
+  <!-- Right Column -->
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="penaltyAmount">Số tiền phạt phát sinh</label>
+      <input type="text" class="form-control" id="penaltyAmount" value="{{ context.contactInfo.penaltyAmount }}" />
+    </div>
+    <div class="form-group">
+      <label for="interestAmount">Số tiền lãi phát sinh</label>
+      <input
+        type="text"
+        class="form-control"
+        id="interestAmount"
+        value="{{ context.contactInfo.interestAmount }}"
+      />
+    </div>
+    <div class="form-group">
+      <label for="principalAmount">Số tiền nợ gốc đã phát sinh</label>
+      <input
+        type="text"
+        class="form-control"
+        id="principalAmount"
+        value="{{ context.contactInfo.principalAmount }}"
+      />
+    </div>
+    <div class="form-group">
+      <label for="posAssign">POS Assign</label>
+      <input
+        type="text"
+        class="form-control"
+        id="posAssign"
+        value="{{ context.contactInfo.posAssign }}"
+      />
+    </div>
+    <div class="form-group">
+      <label for="totalPayment">Tổng số tiền thanh toán</label>
+      <input
+        type="text"
+        class="form-control"
+        id="totalPayment"
+        value="{{ context.contactInfo.totalPayment }}"
+      />
+    </div>
+    <div class="form-group">
+      <label for="lastResultFinal">Last Result Final</label>
+      <input type="text" class="form-control" id="lastResultFinal" value="{{ context.contactInfo.lastResultFinal }}" />
+    </div>
+    <div class="form-group">
+      <label for="totalAmount">Total_Amount</label>
+      <input type="text" class="form-control" id="totalAmount" value="{{ context.contactInfo.totalAmount }}" />
+    </div>
+    <div class="form-group">
+      <label for="dateStart">Date Start</label>
+      <input type="date" class="form-control" id="dateStart" value="{{ context.contactInfo.dateStart }}" />
+    </div>
+    <div class="form-group">
+      <label for="dateEnd">Date End</label>
+      <input type="date" class="form-control" id="dateEnd" value="{{ context.contactInfo.dateEnd }}" />
+    </div>
+  </div>
+</div>

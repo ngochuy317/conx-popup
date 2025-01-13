@@ -1,45 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}{% endblock %}</title>
     <script src="https://unpkg.com/htmx.org@1.1.0"></script>
     <script>
-      document.body.addEventListener('htmx:configRequest', (event) => {
-        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
-      })
+      document.body.addEventListener("htmx:configRequest", (event) => {
+        event.detail.headers["X-CSRFToken"] = "{{ csrf_token }}";
+      });
     </script>
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-</head>
-<body>
+    {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
+  </head>
+  <body>
     <style>
-        .custom-width {
-          width: 250px;
-        }
-      </style>
-  <div class="content-wrapper">
-      <nav class="navbar navbar-expand-xl navbar-light bg-success"> 
+      .custom-width {
+        width: 250px;
+      }
+    </style>
+    <div class="content-wrapper">
+      <nav class="navbar navbar-expand-xl navbar-light bg-success">
         <a class="navbar-brand" href="#">Navbar</a>
       </nav>
       <div class="d-flex">
-          <div class="custom-width bg-warning d-flex flex-column">
-              <a href="">Home</a>
-              <a href="">Dashboard Autocall</a>
-              <a href="">Telesales v2</a>
-              <a href="">Activities</a>
-              <a href="">Manage Telesales</a>
-              <a href="">Lịch sử cuộc gọi</a>
-              <a href="">Setting</a>
-              <a href="">Voice Blaster</a>
-              <a href="">Masking phone</a>
-            </div>
-            <div class="bg-danger flex-fill">
-                    {% block content %}
-                    {% endblock %}
-            </div>
+        <div class="custom-width bg-warning d-flex flex-column">
+          <a href="">Home</a>
+          <a href="">Dashboard Autocall</a>
+          <a href="">Telesales v2</a>
+          <a href="">Activities</a>
+          <a href="">Manage Telesales</a>
+          <a href="">Lịch sử cuộc gọi</a>
+          <a href="">Setting</a>
+          <a href="">Voice Blaster</a>
+          <a href="">Masking phone</a>
+        </div>
+        <div class="bg-danger flex-fill">
+          {% block content %} {% endblock %}
+        </div>
       </div>
-  </div>
-</body>
+    </div>
+    {% block js %} {% endblock %}
+  </body>
 </html>
