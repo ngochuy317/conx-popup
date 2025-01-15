@@ -1,25 +1,12 @@
-import React from "react";
 import { CommonFormWrapper } from "./CommonFormWrapper";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { CustomTextInput } from "./CustomTextInput";
 import { Button } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
 import { CustomDateInput } from "./CustomDateInput";
 import dayjs from "dayjs";
-
-export interface FormField {
-  label: string;
-  type: "text" | "dropdown" | "date";
-  name: string;
-  defaultValue: string;
-  options?: string[];
-  required?: boolean;
-}
-
-interface FormValues {
-  [key: string]: string;
-}
+import { CustomDropdownInput } from "./CustomDropdownInput";
+import { FormField, FormValues } from "../models/FormField";
 
 const formFields: FormField[] = [
   {
@@ -131,24 +118,17 @@ export const UserInfo = () => {
                       handleBlur={handleBlur}
                     />
                   )}
-                  {/* {field.type === "dropdown" && (
-                  <div>
-                    <label>{field.label}</label>
-                    <select
+                  {field.type === "dropdown" && (
+                    <CustomDropdownInput
+                      required={field.required}
+                      label={field.label}
                       name={field.name}
                       value={values[field.name]}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className="w-full p-2 border rounded"
-                    >
-                      {field?.options?.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )} */}
+                      handleBlur={handleBlur}
+                      defaultValue={field.defaultValue}
+                      options={field.options}
+                    />
+                  )}
                 </div>
               ))}
             </div>

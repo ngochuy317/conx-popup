@@ -8,6 +8,9 @@ import { ProductInfo } from "../components/ProductInfo";
 import { AddressInfo } from "../components/AddressInfo";
 import { PhoneInfo } from "../components/PhoneInfo";
 import { MultiTabsDashboard } from "../components/MultiTabsDashboard";
+import { CallOutcome } from "../components/CallOutcome";
+import { HistoryLimit } from "../components/HistoryLimit";
+import { HistoryAll } from "../components/HistoryAll";
 
 export const Home = () => {
   const [activeTab, setActiveTab] = useState("user-info");
@@ -40,17 +43,17 @@ export const Home = () => {
     {
       value: "call-outcome",
       label: "Call Outcome",
-      component: <ContactInfo />,
+      component: <CallOutcome />,
     },
     {
       value: "history-all",
       label: "History all",
-      component: <ContactInfo />,
+      component: <HistoryAll />,
     },
     {
       value: "history-limit",
       label: "History limit",
-      component: <ContactInfo />,
+      component: <HistoryLimit />,
     },
   ];
   const tabBarProps: TabBarProps = {

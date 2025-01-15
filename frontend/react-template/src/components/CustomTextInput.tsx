@@ -54,8 +54,8 @@ export const CustomTextInput = ({
           onBlur={onBlur}
           defaultValue={defaultValue}
           value={value}
-          error={!!(meta.touched && meta.error)}
-          helperText={meta.error}
+          error={!!(meta?.touched && meta?.error)}
+          helperText={meta?.error}
         />
       </div>
     </div>
