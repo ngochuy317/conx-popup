@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import htmx, contact_info, customer_info, payment_info, submit_form, address_info, info_api
+from .views import htmx, contact_info, customer_info, payment_info, submit_form, address_info, payment_info_api, address_info_api
 
 urlpatterns = [
     path('htmx/', htmx, name='htmx'),
@@ -9,5 +9,6 @@ urlpatterns = [
     path('payment_info/', payment_info, name='payment_info'),
     path('address_info/', address_info, name='address_info'),
     path('submit_form/', submit_form, name='submit_form'),
-    path('api/info_api', info_api, name='info_api'),
+    path('api/payment_info_api', payment_info_api, name='payment_info_api'),
+    path('api/address_info_api', address_info_api, name='address_info_api'),
 ]

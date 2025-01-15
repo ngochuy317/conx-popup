@@ -1,133 +1,14 @@
+<form hx-post="{% url 'address_info' %}">
+  {% csrf_token %}
 <div class="row">
   <!-- Left Column -->
-  <div class="col-md-6">
-    <div class="form-group">
-      <label for="loanID">Loan ID</label>
-      <input
-        type="text"
-        class="form-control"
-        id="loanID"
-        value="{{ context.addressInfo.loanId }}"
-      />
-    </div>
-    <div class="form-group">
-      <label for="contractNumber">Số hợp đồng</label>
-      <input
-        type="text"
-        class="form-control"
-        id="contractNumber"
-        value="{{ context.addressInfo.contractNumber }}"
-      />
-    </div>
-    <div class="form-group">
-      <label for="contractDate">Contract Date</label>
-      <input
-        type="date"
-        class="form-control"
-        id="contractDate"
-        value="{{ context.addressInfo.contractDate }}"
-      />
-    </div>
-    <div class="form-group">
-      <label for="currentAccount">Current Account</label>
-      <input type="text" class="form-control" id="currentAccount" value="{{ context.addressInfo.currentAccount }}"/>
-    </div>
-    <div class="form-group">
-      <label for="dpdCurrent">DPD Current</label>
-      <input type="text" class="form-control" id="dpdCurrent" value="{{ context.addressInfo.dpdCurrent }}" />
-    </div>
-    <div class="form-group">
-      <label for="dpdAssign">DPD Assign</label>
-      <input type="text" class="form-control" id="dpdAssign" value="{{ context.addressInfo.dpdAssign }}" />
-    </div>
-    <div class="form-group">
-      <label for="mob">MOB</label>
-      <input type="text" class="form-control" id="mob" value="{{ context.addressInfo.mob }}"/>
-    </div>
-    <div class="form-group">
-      <label for="loanAmount">Số tiền vay</label>
-      <input type="text" class="form-control" id="loanAmount" value="{{ context.addressInfo.loanAmount }}"/>
-    </div>
-    <div class="form-group">
-      <label for="loanTerm">Số kỳ hạn vay</label>
-      <input type="text" class="form-control" id="loanTerm" value="{{ context.addressInfo.loanTerm }}"/>
-    </div>
-    <div class="form-group">
-      <label for="obsDueNo">OBS Due No</label>
-      <input type="text" class="form-control" id="obsDueNo" value="{{ context.addressInfo.obsDueNo }}" />
-    </div>
-    <div class="form-group">
-      <label for="paymentRequestDate">Ngày đề nghị thanh toán</label>
-      <input
-        type="text"
-        class="form-control"
-        id="paymentRequestDate"
-        value="{{ context.addressInfo.paymentRequestDate }}"
-      />
-    </div>
-    <div class="form-group">
-      <label for="assignInvalidDate">Assign Invalid Date</label>
-      <input type="date" class="form-control" id="assignInvalidDate" value="{{ context.addressInfo.assignInvalidDate }}"/>
-    </div>
-  </div>
-
-  <!-- Right Column -->
-  <div class="col-md-6">
-    <div class="form-group">
-      <label for="penaltyAmount">Số tiền phạt phát sinh</label>
-      <input type="text" class="form-control" id="penaltyAmount" value="{{ context.addressInfo.penaltyAmount }}" />
-    </div>
-    <div class="form-group">
-      <label for="interestAmount">Số tiền lãi phát sinh</label>
-      <input
-        type="text"
-        class="form-control"
-        id="interestAmount"
-        value="{{ context.addressInfo.interestAmount }}"
-      />
-    </div>
-    <div class="form-group">
-      <label for="principalAmount">Số tiền nợ gốc đã phát sinh</label>
-      <input
-        type="text"
-        class="form-control"
-        id="principalAmount"
-        value="{{ context.addressInfo.principalAmount }}"
-      />
-    </div>
-    <div class="form-group">
-      <label for="posAssign">POS Assign</label>
-      <input
-        type="text"
-        class="form-control"
-        id="posAssign"
-        value="{{ context.addressInfo.posAssign }}"
-      />
-    </div>
-    <div class="form-group">
-      <label for="totalPayment">Tổng số tiền thanh toán</label>
-      <input
-        type="text"
-        class="form-control"
-        id="totalPayment"
-        value="{{ context.addressInfo.totalPayment }}"
-      />
-    </div>
-    <div class="form-group">
-      <label for="lastResultFinal">Last Result Final</label>
-      <input type="text" class="form-control" id="lastResultFinal" value="{{ context.addressInfo.lastResultFinal }}"/>
-    </div>
-    <div class="form-group">
-      <label for="totalAmount">Total_Amount</label>
-      <input type="text" class="form-control" id="totalAmount" value="{{ context.addressInfo.totalAmount }}"/>
-    </div>
-    <div class="form-group">
-      <label for="dateStart">Date Start</label>
-      <input type="date" class="form-control" id="dateStart" value="{{ context.addressInfo.dateStart }}"/>
-    </div>
-    <div class="form-group">
-      <label for="dateEnd">Date End</label>
-      <input type="date" class="form-control" id="dateEnd" value="{{ context.addressInfo.dateEnd }}"/>
-    </div>
+  <div class="col-md-10">
+    {% include "common/field/text_field_input.html" with field=form.permanent_address %}
+    {% include "common/field/text_field_input.html" with field=form.temporary_address %}
+    {% include "common/field/text_field_input.html" with field=form.region %}
+    {% include "common/field/text_field_input.html" with field=form.district %}
+    {% include "common/field/text_field_input.html" with field=form.province %}
   </div>
 </div>
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>

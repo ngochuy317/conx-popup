@@ -1,103 +1,20 @@
-<form>
+<form hx-post="{% url 'payment_info' %}">
+  {% csrf_token %}
   <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="firstPaidDate">First Paid Date</label>
-        <input
-          type="text"
-          class="form-control"
-          id="firstPaidDate"
-          placeholder="DD/MM/YYYY"
-          value="{{ context.paymentInfo.firstPaidDate }}"
-        />
-      </div>
-      <div class="form-group">
-        <label for="accountNumber">Số tài khoản</label>
-        <input
-          type="text"
-          class="form-control"
-          id="accountNumber"
-          value="{{ context.paymentInfo.accountNumber }}"
-        />
-      </div>
-      <div class="form-group">
-        <label for="largestAmount">Số tiền thanh toán gần nhất</label>
-        <input
-          type="text"
-          class="form-control"
-          id="largestAmount"
-          value="{{ context.paymentInfo.largestAmount }}"
-        />
-      </div>
-      <div class="form-group">
-        <label for="lastPaymentDate">Ngày thanh toán gần nhất</label>
-        <input
-          type="text"
-          class="form-control"
-          id="lastPaymentDate"
-          placeholder="MM/DD/YYYY"
-          value="{{ context.paymentInfo.lastPaymentDate }}"
-        />
-      </div>
-      <div class="form-group">
-        <label for="disbursementDate">Disbursement Date</label>
-        <input
-          type="text"
-          class="form-control is-invalid"
-          id="disbursementDate"
-          value="{{ context.paymentInfo.disbursementDate }}"
-        />
-        <div class="invalid-feedback">Invalid date format</div>
-      </div>
-      <div class="form-group">
-        <label for="cif">CIF</label>
-        <input type="text" class="form-control" id="cif" value="{{ context.paymentInfo.cif }}"/>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="dueDateOverdue">Due Date Overdue</label>
-        <input
-          type="text"
-          class="form-control"
-          id="dueDateOverdue"
-          placeholder="MM/DD/YYYY"
-          value="{{ context.paymentInfo.dueDateOverdue }}"
-        />
-      </div>
-      <div class="form-group">
-        <label for="nextDueDate">Ngày đến hạn chu kỳ tiếp theo</label>
-        <input
-          type="text"
-          class="form-control"
-          id="nextDueDate"
-          placeholder="MM/DD/YYYY"
-          value="{{ context.paymentInfo.nextDueDate }}"
-        />
-      </div>
-      <div class="form-group">
-        <label for="nextDueAmount"
-          >Số tiền phải đóng trong chu kỳ tiếp theo</label
-        >
-        <input type="text" class="form-control" id="nextDueAmount" value="{{ context.paymentInfo.nextDueAmount }}"/>
-      </div>
-      <div class="form-group">
-        <label for="futurePrinAmt">Future PRIN AMT</label>
-        <input type="text" class="form-control" id="futurePrinAmt" value="{{ context.paymentInfo.futurePrinAmt }}"/>
-      </div>
-      <div class="form-group">
-        <label for="remainPrin">Remain PRIN</label>
-        <input type="text" class="form-control" id="remainPrin" value="{{ context.paymentInfo.remainPrin }}"/>
-      </div>
-      <div class="form-group">
-        <label for="posBom">POS BOM</label>
-        <input
-          type="text"
-          class="form-control"
-          id="posBom"
-          value="{{ context.paymentInfo.posBom }}"
-        />
-      </div>
+    <div class="col-md-10">
+      {% include "common/field/date_field_input.html" with field=form.first_paid_date %}
+      {% include "common/field/text_field_input.html" with field=form.account_number %}
+      {% include "common/field/text_field_input.html" with field=form.largest_amount %}
+      {% include "common/field/date_field_input.html" with field=form.last_payment_date %}
+      {% include "common/field/date_field_input.html" with field=form.disbursement_date %}
+      {% include "common/field/text_field_input.html" with field=form.cif %}
+      {% include "common/field/date_field_input.html" with field=form.due_date_overdue %}
+      {% include "common/field/date_field_input.html" with field=form.next_due_date %}
+      {% include "common/field/text_field_input.html" with field=form.next_due_amount %}
+      {% include "common/field/text_field_input.html" with field=form.future_prin_amt %}
+      {% include "common/field/text_field_input.html" with field=form.remain_prin %}
+      {% include "common/field/text_field_input.html" with field=form.pos_bom %}
     </div>
   </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>

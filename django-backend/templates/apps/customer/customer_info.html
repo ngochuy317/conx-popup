@@ -1,63 +1,32 @@
-
+<form hx-post="{% url 'customer_info' %}">
+    {% csrf_token %}
     <div class="row">
         <!-- Left Column -->
         <div class="col-md-6">
+            {% include "common/field/text_field_input.html" with field=form.name %}
             <div class="form-group">
-                <label for="customerName">*Tên KH</label>
-                <input type="text" class="form-control" name="customerName" value="{{ context.customerInfo.name }}">
-            </div>
-            <div class="form-group">
-                <label for="gender">Giới tính</label>
-                <select class="form-control" id="gender">
-                    <option {% if context.customerInfo.gender == 'Male' %}selected{% endif %}>Male</option>
-                    <option {% if context.customerInfo.gender == 'Female' %}selected{% endif %}>Female</option>
-                    <option {% if context.customerInfo.gender == 'Other' %}selected{% endif %}>Other</option>
+                <label>Giới tính</label>
+                <select class="form-control" id="gender" name="{{ form.gender.name }}">
+                    <option {% if form.gender.value == 'Male' %}selected{% endif %}>Male</option>
+                    <option {% if form.gender.value == 'Female' %}selected{% endif %}>Female</option>
+                    <option {% if form.gender.value == 'Other' %}selected{% endif %}>Other</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="idNumber">CMND</label>
-                <input type="text" class="form-control" name="idNumber" value="{{ context.customerInfo.idNumber }}">
-            </div>
-            <div class="form-group">
-                <label for="dob">Ngày sinh</label>
-                <input type="date" class="form-control" name="dob" value="{{ context.customerInfo.dayOfBirth }}">
-            </div>
-            <div class="form-group">
-                <label for="familyRelation">Family Relation</label>
-                <input type="text" class="form-control" name="familyRelation" value="{{ context.customerInfo.familyRelation }}">
-            </div>
-            <div class="form-group">
-                <label for="agency">Agency</label>
-                <input type="text" class="form-control" id="agency" value="{{ context.customerInfo.agency }}">
-            </div>
-            <div class="form-group">
-                <label for="contractNumber">*Số hợp đồng</label>
-                <input type="text" class="form-control" id="contractNumber" value="{{ context.customerInfo.contractNumber }}">
-            </div>
+            {% include "common/field/text_field_input.html" with field=form.id_number %}
+            {% include "common/field/date_field_input.html" with field=form.day_of_birth %}
+            {% include "common/field/text_field_input.html" with field=form.family_relation %}
+            {% include "common/field/text_field_input.html" with field=form.agency %}
+            {% include "common/field/text_field_input.html" with field=form.contract_number %}
         </div>
 
         <!-- Right Column -->
         <div class="col-md-6">
-            <div class="form-group">
-                <label for="companyName">Tên công ty</label>
-                <input type="text" class="form-control" id="companyName" value="{{ context.customerInfo.companyName }}">
-            </div>
-            <div class="form-group">
-                <label for="companyAddress">Địa chỉ công ty</label>
-                <input type="text" class="form-control" id="companyAddress" value="{{ context.customerInfo.companyAddress }}">
-            </div>
-            <div class="form-group">
-                <label for="companyDistrict">Địa chỉ công ty - Quận/Huyện</label>
-                <input type="text" class="form-control" id="companyDistrict" value="{{ context.customerInfo.companyDistrict }}">
-            </div>
-            <div class="form-group">
-                <label for="companyProvince">Địa chỉ công ty - Tỉnh/TP</label>
-                <input type="text" class="form-control" id="companyProvince" value="{{ context.customerInfo.companyProvince }}">
-            </div>
-            <div class="form-group">
-                <label for="group">Group</label>
-                <input type="text" class="form-control" id="group" value="{{ context.customerInfo.group }}">
-            </div>
+            {% include "common/field/text_field_input.html" with field=form.company_name %}
+            {% include "common/field/text_field_input.html" with field=form.company_address %}
+            {% include "common/field/text_field_input.html" with field=form.company_district %}
+            {% include "common/field/text_field_input.html" with field=form.company_province %}
+            {% include "common/field/text_field_input.html" with field=form.group %}
         </div>
     </div>
-    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
