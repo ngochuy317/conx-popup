@@ -23,7 +23,7 @@ function App() {
       <Navbar />
       <div className="flex">
         <MenuBar items={navItems}/>
-        <div className="p-5 w-full border-2">
+        <div className="m-5 p-5 w-full border-2">
           <Outlet />
         </div>
       </div>

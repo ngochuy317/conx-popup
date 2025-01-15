@@ -5,26 +5,32 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { Home } from "./pages/Home";
-import { PhoneInfo } from "./components/PhoneInfo";
-import { AddressInfo } from "./components/AddressInfo";
-import { ContactInfo } from "./components/ContactInfo";
-import { PaymentInfo } from "./components/PaymentInfo";
-import { ProductInfo } from "./components/ProductInfo";
-import { UserInfo } from "./components/UserInfo";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="" element={<App />}>
-          <Route path="home" element={<Home />} />
-          <Route index element={<Home />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="" element={<App />}>
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} />
+            <Route path="dashboard" element={<Home />} />
+            <Route path="telesale-v2" element={<Home />} />
+            <Route path="activities" element={<Home />} />
+            <Route path="telesale-manager" element={<Home />} />
+            <Route path="call-history" element={<Home />} />
+            <Route path="settings" element={<Home />} />
+            <Route path="voice-blaster" element={<Home />} />
+            <Route path="masking-phone" element={<Home />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </LocalizationProvider>
   </React.StrictMode>
 );
 

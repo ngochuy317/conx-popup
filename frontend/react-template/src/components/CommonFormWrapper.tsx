@@ -14,14 +14,14 @@ export const CommonFormWrapper = ({
   const { items, onActiveTab } = tabBar ?? {};
 
   return (
-    <div>
-      <div className="p-2 bg-gray-100 border-2">
-        <h5 className="text-md font-semibold">{title}</h5>
+    <div className="border-2">
+      <div className="p-2 bg-gray-100">
+        <h5 className="text-md font-semibold">{title.toUpperCase()}</h5>
       </div>
       {items && items.length && (
         <TabBar onActiveTab={onActiveTab} items={items} />
       )}
-      <div className="mt-3">
+      <div className="mt-3 p-5">
         {children}
       </div>
     </div>

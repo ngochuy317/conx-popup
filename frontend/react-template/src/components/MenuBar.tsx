@@ -12,7 +12,7 @@ export interface MenuBarProps {
 }
 
 const baseStyles = {
-  vertical: "w-80 flex flex-col",
+  vertical: "w-80 flex flex-col p-5",
   horizontal: "w-full flex flex-row justify-around",
 };
 

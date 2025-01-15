@@ -4,7 +4,7 @@ import React from "react";
 export interface TabBarItemProps {
   value: string;
   label: string;
-  children?: React.ReactNode;
+  component?: React.ReactNode;
 }
 
 export interface TabBarProps {
