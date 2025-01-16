@@ -10,6 +10,17 @@
         event.detail.headers["X-CSRFToken"] = "{{ csrf_token }}";
       });
     </script>
+  <style>
+.primary_background_color {
+    background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
+}
+
+.active_tab{
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
+  font-weight: 600;
+}
+
+  </style>
     {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
   </head>
   <body>
@@ -19,11 +30,11 @@
       }
     </style>
     <div class="content-wrapper">
-      <nav class="navbar navbar-expand-xl navbar-light bg-success">
+      <nav class="navbar navbar-expand-xl navbar-light">
         <a class="navbar-brand" href="#">Navbar</a>
       </nav>
       <div class="d-flex">
-        <div class="custom-width bg-warning d-flex flex-column">
+        <div class="custom-width d-flex flex-column">
           <a href="">Home</a>
           <a href="">Dashboard Autocall</a>
           <a href="">Telesales v2</a>
@@ -34,7 +45,7 @@
           <a href="">Voice Blaster</a>
           <a href="">Masking phone</a>
         </div>
-        <div class="bg-danger flex-fill">
+        <div class="flex-fill">
           {% block content %} {% endblock %}
         </div>
       </div>

@@ -8,39 +8,33 @@
   hx-swap="innerHTML"
 ></div>
 <div class="d-flex">
-  <div class="w-50 bg-success p-2">
-    <div class="bg-info p-2">
-      <h5>THÔNG TIN KHÁCH HÀNG</h5>
+  <div class="w-50 p-2 m-2 border">
+    <div class="p-2 border primary_background_color d-flex item-center">
+      <span class="lh-sm fw-semibold fs-5">THÔNG TIN KHÁCH HÀNG</span>
     </div>
-    <div class="d-flex">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <button
-            class="tab btn btn-secondary nav-link"
-            type="button"
-            hx-get="{% url 'customer_info' %}"
-            hx-target="#tab-content"
-            hx-swap="innerHTML"
-            hx-trigger="click"
-          >
+
+      <ul class="d-flex list-inline fs-6 p-2 pb-0 border-bottom text-center">
+        <li 
+          style="width: 250px; font-size: smaller;"
+          class="tab text-center align-middle p-2"
+          hx-get="{% url 'customer_info' %}"
+          hx-target="#tab-content"
+          hx-swap="innerHTML"
+          hx-trigger="click">
             Customer Info
-          </button>
         </li>
-        <li class="nav-item">
-          <button
-            class="tab btn btn-secondary nav-link"
-            type="button"
-            hx-get="{% url 'contact_info' %}"
-            hx-target="#tab-content"
-            hx-swap="innerHTML"
-            hx-trigger="click"
-          >
-            Contact Info
-          </button>
+        <li 
+          style="width: 250px; font-size: smaller;"
+          class="tab text-center align-middle p-2"
+          hx-get="{% url 'contact_info' %}"
+          hx-target="#tab-content"
+          hx-swap="innerHTML"
+          hx-trigger="click">
+        Contact Info
         </li>
-        <li class="nav-item">
-          <button
-            class="tab btn btn-secondary nav-link"
+        <li 
+            style="width: 250px; font-size: smaller;"
+            class="tab text-center align-middle p-2"
             type="button"
             hx-get="{% url 'payment_info' %}"
             hx-target="#tab-content"
@@ -48,38 +42,38 @@
             hx-trigger="click"
           >
             Payment Info
-          </button>
         </li>
-        <li class="nav-item">
-          <button class="tab btn btn-secondary nav-link disabled" type="button">
+        <li 
+        style="width: 250px; font-size: smaller;"
+        class="tab align-middle p-2">
             Product Info
-          </button>
         </li>
-        <li class="nav-item">
-          <button
-            class="tab btn btn-secondary nav-link"
-            type="button"
+        <li 
+        style="width: 250px; font-size: smaller;"
+        class="tab align-middle p-2"
+          type="button"
             hx-get="{% url 'address_info' %}"
             hx-target="#tab-content"
             hx-swap="innerHTML"
             hx-trigger="click"
           >
             Address Info
-          </button>
         </li>
-        <li class="nav-item">
-          <button class="tab btn btn-secondary nav-link disabled" type="button">
+        <li 
+            style="width: 250px; font-size: smaller;"
+            class="tab align-middle p-2">
             Phone Info
-          </button>
         </li>
       </ul>
-    </div>
-    <div>
-      <h6 class="bg-info">CUSTOMER INFO</h6>
-    </div>
-      <div id="tab-content"></div>
+
+      <div class="p-2 pt-0">
+        <div class="p-2 border primary_background_color d-flex item-cente">
+          <span class="lh-sm fw-semibold">CUSTOMER INFO</span>
+        </div>
+        <div class="p-2" id="tab-content"></div>
+      </div>
   </div>
-  <div class="w-50 bg-warning p-2">Section 2</div>
+  <div class="w-50 p-2">Section 2</div>
 </div>
 
 {% endblock %} {% block js %}
@@ -88,10 +82,10 @@
   document.body.addEventListener("htmx:beforeRequest", function (event) {
     document
       .querySelectorAll(".tab")
-      .forEach((tab) => tab.classList.remove("active"));
+      .forEach((tab) => tab.classList.remove("active_tab"));
     const activeTab = event.target.closest(".tab");
     if (activeTab) {
-      activeTab.classList.add("active");
+      activeTab.classList.add("active_tab");
     }
   });
 
@@ -99,7 +93,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     const firstTab = document.querySelector(".tab");
     if (firstTab) {
-        firstTab.classList.add("active");
+        firstTab.classList.add("active_tab");
         firstTab.click(); // Trigger click event on the first tab
     }
   });

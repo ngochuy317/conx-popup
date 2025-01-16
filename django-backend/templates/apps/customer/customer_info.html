@@ -1,11 +1,13 @@
 <form hx-post="{% url 'customer_info' %}">
     {% csrf_token %}
-    <div class="row">
+    <div 
+    style="padding-right: 2rem;padding-left: 2rem;"
+    class="row mt-3">
         <!-- Left Column -->
         <div class="col-md-6">
             {% include "common/field/text_field_input.html" with field=form.name %}
-            <div class="form-group">
-                <label>Giới tính</label>
+            <div class="form-group mb-5 d-flex">
+                <label style="width: 250px;">Giới tính</label>
                 <select class="form-control" id="gender" name="{{ form.gender.name }}">
                     <option {% if form.gender.value == 'Male' %}selected{% endif %}>Male</option>
                     <option {% if form.gender.value == 'Female' %}selected{% endif %}>Female</option>
