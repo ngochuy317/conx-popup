@@ -159,7 +159,7 @@ def payment_info_api(request: HttpRequest) -> Response:
         return Response(serializer.data)
 
     if request.method == 'POST':
-        serializer = PaymentInfoSerializer(data=request.data)
+        serializer = PaymentInfoSerializer(payment_info_instance, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -174,7 +174,7 @@ def address_info_api(request: HttpRequest) -> Response:
         return Response(serializer.data)
 
     if request.method == 'POST':
-        serializer = AddressInfoSerializer(data=request.data)
+        serializer = AddressInfoSerializer(address_info_instance, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -189,7 +189,7 @@ def contact_info_api(request: HttpRequest) -> Response:
         return Response(serializer.data)
 
     if request.method == 'POST':
-        serializer = ContactInfoSerializer(data=request.data)
+        serializer = ContactInfoSerializer(contact_info_instance, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -204,7 +204,7 @@ def customer_info_api(request: HttpRequest) -> Response:
         return Response(serializer.data)
 
     if request.method == 'POST':
-        serializer = CustomerInfoSerializer(data=request.data)
+        serializer = CustomerInfoSerializer(customer_info_instance, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
