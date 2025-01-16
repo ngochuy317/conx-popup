@@ -1,13 +1,15 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { CommonFormWrapper } from "./CommonFormWrapper";
 import * as Yup from "yup";
-import { FormField, FormValues } from "../models/FormField";
+import { FormField } from "../models/FormField";
 import { Button } from "@mui/material";
 import dayjs from "dayjs";
 import { Formik } from "formik";
 import { CustomDateInput } from "./CustomDateInput";
 import { CustomDropdownInput } from "./CustomDropdownInput";
 import { CustomTextInput } from "./CustomTextInput";
+import { BASE_SERVICE_API_URL, CONTACT_API_PATH } from "../consts/Constance";
+import { ContactInfoModel } from "../models/ContactInfoModel";
 
 export const ContactInfo = () => {
   const formFields: FormField[] = [
@@ -60,12 +62,12 @@ export const ContactInfo = () => {
       name: "loanTerm",
       defaultValue: "",
     },
-    { label: "OBS Due No", type: "text", name: "obsDueNo", defaultValue: "0" },
+    { label: "OBS Due No", type: "text", name: "obsDueNo", defaultValue: "" },
     {
       label: "Ngày đề nghị thanh toán",
       type: "date",
-      name: "paymentProposalDate",
-      defaultValue: "0",
+      name: "paymentRequestDate",
+      defaultValue: "",
     },
     {
       label: "Số ngày trễ hạn",
@@ -83,31 +85,31 @@ export const ContactInfo = () => {
       label: "Assign Invalid Date",
       type: "date",
       name: "assignInvalidDate",
-      defaultValue: "MM/DD/YYYY",
+      defaultValue: "",
     },
     {
       label: "Số tiền phát phát sinh",
       type: "text",
-      name: "arisingAmount",
-      defaultValue: "0",
+      name: "penaltyAmount",
+      defaultValue: "",
     },
     {
       label: "Số tiền lãi phát sinh",
       type: "text",
-      name: "interestArising",
-      defaultValue: "25,494,693",
+      name: "interestAmount",
+      defaultValue: "",
     },
     {
       label: "Số tiền nợ gốc đã phát sinh",
       type: "text",
-      name: "principalArising",
-      defaultValue: "13,817,660",
+      name: "principalAmount",
+      defaultValue: "",
     },
     {
       label: "POS Assign",
       type: "text",
       name: "posAssign",
-      defaultValue: "13,817,660",
+      defaultValue: "",
     },
     {
       label: "Tổng số tiền thanh toán",
@@ -131,10 +133,13 @@ export const ContactInfo = () => {
     { label: "Date End", type: "date", name: "dateEnd", defaultValue: "" },
   ];
 
-  const initialValues: FormValues = formFields.reduce((acc, field) => {
-    acc[field.name] = field.defaultValue;
-    return acc;
-  }, {} as FormValues);
+  const [defaultValue, setDefaultValue] = useState({} as ContactInfoModel);
+  useEffect(() => {
+    fetch(BASE_SERVICE_API_URL + CONTACT_API_PATH).then(async (res) => {
+      const data: ContactInfoModel = await res.json();
+      setDefaultValue(data);
+    });
+  }, []);
 
 
   const validationSchema = Yup.object(
@@ -150,16 +155,30 @@ export const ContactInfo = () => {
     }, {} as { [key: string]: any })
   );
 
+  if (!defaultValue) {
+    return <div>Loading...</div>;
+  }
+  
   return (
     <CommonFormWrapper title="Contact Info">
       <Formik
-        initialValues={initialValues}
+        initialValues={defaultValue}
+        enableReinitialize
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          fetch(BASE_SERVICE_API_URL + CONTACT_API_PATH, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          })
+            .then((res) => res.json())
+            .then((data: ContactInfoModel) => {
+              setDefaultValue(data);
+            })
+            .catch((error) => console.error("Failed to update data:", error))
+            .finally(() => setSubmitting(false));
         }}
       >
         {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
@@ -175,7 +194,7 @@ export const ContactInfo = () => {
                       required={field.required}
                       label={field.label}
                       name={field.name}
-                      value={values[field.name]}
+                      value={values[field.name as keyof ContactInfoModel]}
                       handleChange={handleChange}
                       handleBlur={handleBlur}
                     />
@@ -185,7 +204,9 @@ export const ContactInfo = () => {
                       required={field.required}
                       label={field.label}
                       name={field.name}
-                      value={dayjs(values[field.name])}
+                      value={dayjs(
+                        values[field.name as keyof ContactInfoModel]
+                      )}
                       handleBlur={handleBlur}
                     />
                   )}
@@ -194,9 +215,9 @@ export const ContactInfo = () => {
                       required={field.required}
                       label={field.label}
                       name={field.name}
-                      value={values[field.name]}
+                      value={values[field.name as keyof ContactInfoModel]}
                       handleBlur={handleBlur}
-                      defaultValue={field.defaultValue}
+                      defaultValue={defaultValue[field.name as keyof ContactInfoModel]}
                       options={field.options}
                     />
                   )}

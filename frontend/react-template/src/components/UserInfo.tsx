@@ -6,14 +6,17 @@ import { Button } from "@mui/material";
 import { CustomDateInput } from "./CustomDateInput";
 import dayjs from "dayjs";
 import { CustomDropdownInput } from "./CustomDropdownInput";
-import { FormField, FormValues } from "../models/FormField";
+import { FormField } from "../models/FormField";
+import { useState, useEffect } from "react";
+import { CustomerInfoModel } from "../models/CustomerInfoModel";
+import { BASE_SERVICE_API_URL, CUSTOMER_API_PATH } from "../consts/Constance";
 
 const formFields: FormField[] = [
   {
     label: "Tên KH",
     type: "text",
-    name: "customerName",
-    defaultValue: "TRUONG CONG THANH",
+    name: "name",
+    defaultValue: "",
     required: true,
   },
   {
@@ -21,10 +24,15 @@ const formFields: FormField[] = [
     type: "dropdown",
     name: "gender",
     options: ["Male", "Female"],
-    defaultValue: "Male",
+    defaultValue: "",
   },
-  { label: "CMND", type: "text", name: "cmnd", defaultValue: "19172382" },
-  { label: "Ngày sinh", type: "date", name: "dob", defaultValue: "1981-03-23" },
+  { label: "CMND", type: "text", name: "idNumber", defaultValue: "19172382" },
+  {
+    label: "Ngày sinh",
+    type: "date",
+    name: "dayOfBirth",
+    defaultValue: "",
+  },
   {
     label: "Family Relation",
     type: "text",
@@ -36,7 +44,7 @@ const formFields: FormField[] = [
     label: "Số hợp đồng",
     type: "text",
     name: "contractNumber",
-    defaultValue: "LD48811600487",
+    defaultValue: "",
   },
   { label: "Tên công ty", type: "text", name: "companyName", defaultValue: "" },
   {
@@ -54,17 +62,24 @@ const formFields: FormField[] = [
   {
     label: "Địa chỉ công ty - Tỉnh/TP",
     type: "text",
-    name: "companyCity",
+    name: "companyProvince",
     defaultValue: "",
   },
   { label: "Group", type: "text", name: "group", defaultValue: "" },
 ];
 
 export const UserInfo = () => {
-  const initialValues: FormValues = formFields.reduce((acc, field) => {
-    acc[field.name] = field.defaultValue;
-    return acc;
-  }, {} as FormValues);
+  const [defaultValue, setDefaultValue] = useState({} as CustomerInfoModel);
+  useEffect(() => {
+    fetch(BASE_SERVICE_API_URL + CUSTOMER_API_PATH).then(async (res) => {
+      const data: CustomerInfoModel = await res.json();
+      setDefaultValue(data);
+    });
+  }, []);
+
+  if (!defaultValue) {
+    return <div>Loading...</div>;
+  }
 
   const validationSchema = Yup.object(
     formFields.reduce((schema, field) => {
@@ -82,13 +97,23 @@ export const UserInfo = () => {
   return (
     <CommonFormWrapper title="Customer Info">
       <Formik
-        initialValues={initialValues}
+        initialValues={defaultValue}
         validationSchema={validationSchema}
+        enableReinitialize
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          fetch(BASE_SERVICE_API_URL + CUSTOMER_API_PATH, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          })
+            .then((res) => res.json())
+            .then((data: CustomerInfoModel) => {
+              setDefaultValue(data);
+            })
+            .catch((error) => console.error("Failed to update data:", error))
+            .finally(() => setSubmitting(false));
         }}
       >
         {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
@@ -104,7 +129,7 @@ export const UserInfo = () => {
                       required={field.required}
                       label={field.label}
                       name={field.name}
-                      value={values[field.name]}
+                      value={values[field.name as keyof CustomerInfoModel]}
                       handleChange={handleChange}
                       handleBlur={handleBlur}
                     />
@@ -114,18 +139,22 @@ export const UserInfo = () => {
                       required={field.required}
                       label={field.label}
                       name={field.name}
-                      value={dayjs(values[field.name])}
+                      value={dayjs(
+                        values[field.name as keyof CustomerInfoModel]
+                      )}
                       handleBlur={handleBlur}
                     />
                   )}
                   {field.type === "dropdown" && (
                     <CustomDropdownInput
+                      defaultValue={
+                        defaultValue[field.name as keyof CustomerInfoModel] ?? "Male"
+                      }
                       required={field.required}
                       label={field.label}
                       name={field.name}
-                      value={values[field.name]}
+                      value={values[field.name as keyof CustomerInfoModel]}
                       handleBlur={handleBlur}
-                      defaultValue={field.defaultValue}
                       options={field.options}
                     />
                   )}

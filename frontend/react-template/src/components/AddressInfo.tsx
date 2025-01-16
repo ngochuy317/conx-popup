@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FormField, FormValues } from "../models/FormField";
 import { Button } from "@mui/material";
 import dayjs from "dayjs";
@@ -8,6 +8,8 @@ import { CustomDateInput } from "./CustomDateInput";
 import { CustomDropdownInput } from "./CustomDropdownInput";
 import { CustomTextInput } from "./CustomTextInput";
 import * as Yup from "yup";
+import { ADDRESS_API_PATH, BASE_SERVICE_API_URL } from "../consts/Constance";
+import { AddressInfoModel } from "../models/AddressInfoModel";
 
 export const AddressInfo = () => {
   const formFields: FormField[] = [
@@ -27,21 +29,28 @@ export const AddressInfo = () => {
     {
       label: "Tỉnh/Thành phố",
       type: "text",
-      name: "temporaryProvinceCity",
+      name: "province",
       defaultValue: "",
     },
     {
       label: "Quận/Huyện",
       type: "text",
-      name: "temporaryDistrict",
+      name: "district",
       defaultValue: "",
     },
   ];
 
-  const initialValues: FormValues = formFields.reduce((acc, field) => {
-    acc[field.name] = field.defaultValue;
-    return acc;
-  }, {} as FormValues);
+  const [defaultValue, setDefaultValue] = useState({} as AddressInfoModel);
+  useEffect(() => {
+    fetch(BASE_SERVICE_API_URL + ADDRESS_API_PATH).then(async (res) => {
+      const data: AddressInfoModel = await res.json();
+      setDefaultValue(data);
+    });
+  }, []);
+
+  if (!defaultValue) {
+    return <div>Loading...</div>;
+  }
 
   const validationSchema = Yup.object(
     formFields.reduce((schema, field) => {
@@ -57,15 +66,25 @@ export const AddressInfo = () => {
   );
 
   return (
-    <CommonFormWrapper title="Customer Info">
+    <CommonFormWrapper title="Address Info">
       <Formik
-        initialValues={initialValues}
+        initialValues={defaultValue}
         validationSchema={validationSchema}
+        enableReinitialize
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          fetch(BASE_SERVICE_API_URL + ADDRESS_API_PATH, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          })
+            .then((res) => res.json())
+            .then((data: AddressInfoModel) => {
+              setDefaultValue(data);
+            })
+            .catch((error) => console.error("Failed to update data:", error))
+            .finally(() => setSubmitting(false));
         }}
       >
         {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
@@ -81,7 +100,7 @@ export const AddressInfo = () => {
                       required={field.required}
                       label={field.label}
                       name={field.name}
-                      value={values[field.name]}
+                      value={values[field.name as keyof AddressInfoModel]}
                       handleChange={handleChange}
                       handleBlur={handleBlur}
                     />
@@ -91,7 +110,9 @@ export const AddressInfo = () => {
                       required={field.required}
                       label={field.label}
                       name={field.name}
-                      value={dayjs(values[field.name])}
+                      value={dayjs(
+                        values[field.name as keyof AddressInfoModel]
+                      )}
                       handleBlur={handleBlur}
                     />
                   )}
@@ -100,7 +121,7 @@ export const AddressInfo = () => {
                       required={field.required}
                       label={field.label}
                       name={field.name}
-                      value={values[field.name]}
+                      value={values[field.name as keyof AddressInfoModel]}
                       handleBlur={handleBlur}
                       defaultValue={field.defaultValue}
                       options={field.options}

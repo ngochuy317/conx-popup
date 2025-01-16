@@ -9,16 +9,15 @@ import { CustomDateInput } from "./CustomDateInput";
 import { CustomDropdownInput } from "./CustomDropdownInput";
 import { CustomTextInput } from "./CustomTextInput";
 import { PaymentInfoModel } from "../models/PaymentInfoModel";
+import { BASE_SERVICE_API_URL, PAYMENT_API_PATH } from "../consts/Constance";
 
 export const PaymentInfo = () => {
   const [defaultValue, setDefaultValue] = useState({} as PaymentInfoModel);
   useEffect(() => {
-    fetch("http://localhost:28000/customer/api/payment_info_api").then(
-      async (res) => {
-        const data: PaymentInfoModel = await res.json();
-        setDefaultValue(data);
-      }
-    );
+    fetch(BASE_SERVICE_API_URL + PAYMENT_API_PATH).then(async (res) => {
+      const data: PaymentInfoModel = await res.json();
+      setDefaultValue(data);
+    });
   }, []);
 
   const formFields: FormField[] = [
@@ -108,14 +107,6 @@ export const PaymentInfo = () => {
     return <div>Loading...</div>;
   }
 
-  const initialValues: PaymentInfoModel = formFields.reduce((acc, field) => {
-    if (!!defaultValue[field.name as keyof PaymentInfoModel]) {
-      acc[field.name as keyof PaymentInfoModel] =
-        defaultValue[field.name as keyof PaymentInfoModel];
-    }
-    return acc;
-  }, {} as PaymentInfoModel);
-  console.log(initialValues)
   return (
     <CommonFormWrapper title="Contact Info">
       <Formik
@@ -123,10 +114,19 @@ export const PaymentInfo = () => {
         validationSchema={validationSchema}
         enableReinitialize
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          fetch(BASE_SERVICE_API_URL + PAYMENT_API_PATH, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          })
+            .then((res) => res.json())
+            .then((data: PaymentInfoModel) => {
+              setDefaultValue(data);
+            })
+            .catch((error) => console.error("Failed to update data:", error))
+            .finally(() => setSubmitting(false));
         }}
       >
         {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
