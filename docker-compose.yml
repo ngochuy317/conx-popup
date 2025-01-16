@@ -10,15 +10,16 @@ services:
     ports:
       - "28000:8000"
   
-  # react-app:
-  #   container_name: react-app
-  #   build: ./reactjs-frontend
-  #   command: ["tail", "-f", "/dev/null"]
-  #   volumes:
-  #     - ./reactjs-frontend:/app
-  #     - /app/node_modules
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     - CHOKIDAR_USEPOLLING=true
-  #     - NODE_OPTIONS=--openssl-legacy-provider
+  react-app:
+    container_name: react-app
+    build: ./frontend/react-template
+    # command: ["tail", "-f", "/dev/null"]
+    volumes:
+      - ./frontend/react-template:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true # create-ui-app <= 5.x
+      - WATCHPACK_POLLING=true # create-ui-app >= 5.x
+      - NODE_OPTIONS=--openssl-legacy-provider
