@@ -15,16 +15,13 @@ export interface CustomTextInputProps {
 export const CustomTextInput = ({
   handleChange,
   handleBlur,
-  value,
   name,
-  defaultValue = "",
   label,
   placeholder,
   required = false,
 }: CustomTextInputProps) => {
-
   const [field, meta] = useField(name);
-  
+
   const onChange = (e: React.ChangeEvent<any>) => {
     handleChange?.(e);
   };
@@ -52,8 +49,7 @@ export const CustomTextInput = ({
           name={name}
           onChange={onChange}
           onBlur={onBlur}
-          defaultValue={defaultValue}
-          value={value}
+          value={meta.value}
           error={!!(meta?.touched && meta?.error)}
           helperText={meta?.error}
         />

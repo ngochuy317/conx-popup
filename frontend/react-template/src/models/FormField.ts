@@ -8,5 +8,5 @@ export interface FormField {
 }
 
 export interface FormValues {
-  [key: string]: string;
+  [key: string | number]: string;
 }

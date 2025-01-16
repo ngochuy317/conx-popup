@@ -1,5 +1,5 @@
-import React from "react";
-import { FormField, FormValues } from "../models/FormField";
+import { useEffect, useState } from "react";
+import { FormField } from "../models/FormField";
 import * as Yup from "yup";
 import { Button } from "@mui/material";
 import dayjs from "dayjs";
@@ -8,151 +8,89 @@ import { CommonFormWrapper } from "./CommonFormWrapper";
 import { CustomDateInput } from "./CustomDateInput";
 import { CustomDropdownInput } from "./CustomDropdownInput";
 import { CustomTextInput } from "./CustomTextInput";
+import { PaymentInfoModel } from "../models/PaymentInfoModel";
 
 export const PaymentInfo = () => {
+  const [defaultValue, setDefaultValue] = useState({} as PaymentInfoModel);
+  useEffect(() => {
+    fetch("http://localhost:28000/customer/api/payment_info_api").then(
+      async (res) => {
+        const data: PaymentInfoModel = await res.json();
+        setDefaultValue(data);
+      }
+    );
+  }, []);
+
   const formFields: FormField[] = [
-    {
-      label: "Loan ID",
-      type: "text",
-      name: "loanId",
-      defaultValue: "Nhắc ông Trịnh Phương Nam về",
-    },
-    {
-      label: "Số hợp đồng",
-      type: "text",
-      name: "contractNumber",
-      defaultValue: "LD1831600497",
-    },
-    {
-      label: "Contract Date",
-      type: "date",
-      name: "contractDate",
-      defaultValue: "12/11/2018",
-    },
-    {
-      label: "Current Account",
-      type: "text",
-      name: "currentAccount",
-      defaultValue: "",
-    },
-    {
-      label: "DPD Current",
-      type: "text",
-      name: "dpdCurrent",
-      defaultValue: "1785",
-    },
-    {
-      label: "DPD Assign",
-      type: "text",
-      name: "dpdAssign",
-      defaultValue: "1785",
-    },
-    { label: "MOB", type: "text", name: "mob", defaultValue: "" },
-    {
-      label: "Số tiền vay",
-      type: "text",
-      name: "loanAmount",
-      defaultValue: "",
-    },
-    {
-      label: "Số kỳ hạn vay",
-      type: "text",
-      name: "loanTerm",
-      defaultValue: "",
-    },
-    { label: "OBS Due No", type: "text", name: "obsDueNo", defaultValue: "0" },
-    {
-      label: "Ngày đề nghị thanh toán",
-      type: "date",
-      name: "paymentProposalDate",
-      defaultValue: "0",
-    },
-    {
-      label: "Số ngày trễ hạn",
-      type: "text",
-      name: "lateDays",
-      defaultValue: "",
-    },
-    {
-      label: "Số tiền phải đóng hàng tháng",
-      type: "text",
-      name: "monthlyPayment",
-      defaultValue: "",
-    },
-    {
-      label: "Assign Invalid Date",
-      type: "date",
-      name: "assignInvalidDate",
-      defaultValue: "MM/DD/YYYY",
-    },
     {
       label: "First Paid Date",
       type: "date",
       name: "firstPaidDate",
-      defaultValue: "DD/MM/YYYY",
+      defaultValue: "",
     },
     {
       label: "Số tài khoản",
       type: "text",
       name: "accountNumber",
-      defaultValue: "139489028",
+      defaultValue: "",
     },
     {
       label: "Số tiền thanh toán gần nhất",
       type: "text",
-      name: "latestPaymentAmount",
-      defaultValue: "19,000,000",
+      name: "largestAmount",
+      defaultValue: "",
     },
     {
       label: "Ngày thanh toán gần nhất",
       type: "date",
-      name: "latestPaymentDate",
-      defaultValue: "MM/DD/YYYY",
+      name: "lastPaymentDate",
+      defaultValue: "",
     },
     {
       label: "Disbursement Date",
       type: "text",
       name: "disbursementDate",
-      defaultValue: "43416",
+      defaultValue: "",
     },
     { label: "cif", type: "text", name: "cif", defaultValue: "" },
     {
       label: "Due Date Overdue",
       type: "date",
       name: "dueDateOverdue",
-      defaultValue: "MM/DD/YYYY",
+      defaultValue: "",
     },
     {
       label: "Ngày đến hạn chu kỳ tiếp theo",
       type: "date",
-      name: "nextCycleDueDate",
-      defaultValue: "MM/DD/YYYY",
+      name: "nextDueDate",
+      defaultValue: "",
     },
     {
       label: "Số tiền phải đóng trong chu kỳ tiếp theo",
       type: "text",
-      name: "nextCyclePayment",
+      name: "nextDueAmount",
       defaultValue: "",
     },
     {
       label: "Future PRIN AMT",
       type: "text",
-      name: "futurePrincipalAmount",
+      name: "futurePrinAmt",
       defaultValue: "",
     },
     {
       label: "Remain PRIN",
       type: "text",
-      name: "remainingPrincipal",
+      name: "remainPrin",
       defaultValue: "",
     },
     {
       label: "POS BOM",
       type: "text",
       name: "posBom",
-      defaultValue: "13,817,660",
+      defaultValue: "dsadasd",
     },
   ];
+
   const validationSchema = Yup.object(
     formFields.reduce((schema, field) => {
       if (field.required) {
@@ -165,15 +103,25 @@ export const PaymentInfo = () => {
       return schema;
     }, {} as { [key: string]: any })
   );
-  const initialValues: FormValues = formFields.reduce((acc, field) => {
-    acc[field.name] = field.defaultValue;
+
+  if (!defaultValue) {
+    return <div>Loading...</div>;
+  }
+
+  const initialValues: PaymentInfoModel = formFields.reduce((acc, field) => {
+    if (!!defaultValue[field.name as keyof PaymentInfoModel]) {
+      acc[field.name as keyof PaymentInfoModel] =
+        defaultValue[field.name as keyof PaymentInfoModel];
+    }
     return acc;
-  }, {} as FormValues);
+  }, {} as PaymentInfoModel);
+  console.log(initialValues)
   return (
     <CommonFormWrapper title="Contact Info">
       <Formik
-        initialValues={initialValues}
+        initialValues={defaultValue}
         validationSchema={validationSchema}
+        enableReinitialize
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2));
@@ -184,17 +132,14 @@ export const PaymentInfo = () => {
         {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
           <form onSubmit={handleSubmit}>
             <div className="">
-              {formFields.map((field, index) => (
-                <div
-                  key={field.name}
-                  className={`mb-4`}
-                >
+              {formFields.map((field) => (
+                <div key={field.name} className={`mb-4`}>
                   {field.type === "text" && (
                     <CustomTextInput
                       required={field.required}
                       label={field.label}
-                      name={field.name}
-                      value={values[field.name]}
+                      name={field.name as keyof PaymentInfoModel}
+                      value={values[field.name as keyof PaymentInfoModel]}
                       handleChange={handleChange}
                       handleBlur={handleBlur}
                     />
@@ -204,7 +149,9 @@ export const PaymentInfo = () => {
                       required={field.required}
                       label={field.label}
                       name={field.name}
-                      value={dayjs(values[field.name])}
+                      value={dayjs(
+                        values[field.name as keyof PaymentInfoModel]
+                      )}
                       handleBlur={handleBlur}
                     />
                   )}
@@ -213,9 +160,8 @@ export const PaymentInfo = () => {
                       required={field.required}
                       label={field.label}
                       name={field.name}
-                      value={values[field.name]}
+                      value={values[field.name as keyof PaymentInfoModel]}
                       handleBlur={handleBlur}
-                      defaultValue={field.defaultValue}
                       options={field.options}
                     />
                   )}
