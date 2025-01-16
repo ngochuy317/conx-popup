@@ -27,7 +27,32 @@ class AddressInfo(models.Model):
     region = models.CharField(max_length=100)
     province = models.CharField(max_length=100)
     district = models.CharField(max_length=100)
-    
+
+
+class PhoneInfo(models.Model):
+    spouse_name = models.CharField(max_length=300)
+    contact_name_1 = models.CharField(max_length=300)
+    contact_relationship_1 = models.CharField(max_length=300)
+    contact_name_2 = models.CharField(max_length=300)
+    contact_relationship_2 = models.CharField(max_length=300)
+    family_book = models.CharField(max_length=300)
+    other_contact_name = models.CharField(max_length=300)
+    other_contact_name_2 = models.CharField(max_length=300)
+
+
+class ProductInfo(models.Model):
+    product = models.CharField(max_length=300)
+
+
+class CallOutcome(models.Model):
+    pds = models.BooleanField()
+    final = models.BooleanField()
+    contacted_person = models.CharField(max_length=300)
+    action_code = models.CharField(max_length=300)
+    reason_code = models.CharField(max_length=300)
+    note = models.TextField(max_length=300)
+    payment_date = models.DateField()
+    payment_amount = models.IntegerField()
 
 
 class PaymentInfo(models.Model):
@@ -70,6 +95,8 @@ class ContactInfo(models.Model):
     contract_date = models.DateField()
     contract_number = models.CharField(max_length=100)
     loan_id = models.CharField(max_length=100)
+    late_days = models.IntegerField(default=0)
+    monthly_payment = models.IntegerField(default=0)
 
     def __str__(self):
         return self.contract_number

@@ -1,0 +1,7 @@
+<form hx-post="{% url 'product-info' %}" data-active-tab="product-info">
+    {% csrf_token %}
+    <div class="row">
+      {% include "common/field/text_field_input.html" with field=form.product %}
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

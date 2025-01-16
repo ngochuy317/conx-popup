@@ -1,5 +1,34 @@
 from django import forms
-from .models import CustomerInfo, PaymentInfo, AddressInfo, ContactInfo
+from .models import (
+    CustomerInfo,
+    PaymentInfo,
+    AddressInfo,
+    ContactInfo,
+    ProductInfo,
+    PhoneInfo,
+)
+
+
+class PhoneInfoForm(forms.ModelForm):
+    spouse_name = forms.CharField(required=False, label="Tên Vợ/Chồng")
+    contact_name_1 = forms.CharField(required=False, label="Liên hệ thứ 1")
+    contact_relationship_1 = forms.CharField(required=False, label="Mối quan hệ của SDT thứ 1")
+    contact_name_2 = forms.CharField(required=False, label="Liên hệ thứ 2")
+    contact_relationship_2 = forms.CharField(required=False, label="Mối quan hệ của SDT thứ 2")
+    family_book = forms.CharField(required=False, label="Family Book")
+    other_contact_name = forms.CharField(required=False, label="Tên liên hệ khác")
+    other_contact_name_2 = forms.CharField(required=False, label="Tên liên hệ khác 2")
+
+    class Meta:
+        model = PhoneInfo
+        fields = '__all__'
+
+
+class ProductInfoForm(forms.ModelForm):
+    product = forms.CharField(required=False)
+    class Meta:
+        model = ProductInfo
+        fields = '__all__'
 
 
 class CustomerInfoForm(forms.ModelForm):
@@ -40,6 +69,8 @@ class ContactInfoForm(forms.ModelForm):
     total_amount = forms.CharField(required=False, label="Total_Amount")
     date_start = forms.DateField(required=False, label="Date Start")
     date_end = forms.DateField(required=False, label="Date End")
+    late_days = forms.IntegerField(required=False, label="Số ngày trễ hạn")
+    monthly_payment = forms.IntegerField(required=False, label="Số tiền phải đóng hàng tháng")
 
     class Meta:
         model = ContactInfo

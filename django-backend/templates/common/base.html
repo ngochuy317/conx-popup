@@ -4,12 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}{% endblock %}</title>
-    <script src="https://unpkg.com/htmx.org@1.1.0"></script>
-    <script>
-      document.body.addEventListener("htmx:configRequest", (event) => {
-        event.detail.headers["X-CSRFToken"] = "{{ csrf_token }}";
-      });
-    </script>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
   <style>
 .primary_background_color {
     background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));

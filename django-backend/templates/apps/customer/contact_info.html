@@ -1,4 +1,4 @@
-<form hx-post="{% url 'contact_info' %}">
+<form hx-post="{% url 'contact-info' %}" data-active-tab="contact-info">
   {% csrf_token %}
   <div class="row">
   <!-- Left Column -->
@@ -14,6 +14,8 @@
     {% include "common/field/text_field_input.html" with field=form.loan_term %}
     {% include "common/field/text_field_input.html" with field=form.obs_due_no %}
     {% include "common/field/date_field_input.html" with field=form.payment_request_date %}
+    {% include "common/field/number_field_input.html" with field=form.late_days %}
+    {% include "common/field/number_field_input.html" with field=form.monthly_payment %}
     {% include "common/field/date_field_input.html" with field=form.assign_invalid_date %}
   </div>
 
