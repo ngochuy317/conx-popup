@@ -1,0 +1,21 @@
+<form method="POST" action="{% url 'alpine-index' %}">
+  {% csrf_token %}
+  <input type="hidden" name="active_tab" value="payment-info">
+  <div class="row">
+    <div class="col-md-10">
+      {% include "common/field/date_field_input.html" with field=payment_form.first_paid_date %}
+      {% include "common/field/text_field_input.html" with field=payment_form.account_number %}
+      {% include "common/field/text_field_input.html" with field=payment_form.largest_amount %}
+      {% include "common/field/date_field_input.html" with field=payment_form.last_payment_date %}
+      {% include "common/field/date_field_input.html" with field=payment_form.disbursement_date %}
+      {% include "common/field/text_field_input.html" with field=payment_form.cif %}
+      {% include "common/field/date_field_input.html" with field=payment_form.due_date_overdue %}
+      {% include "common/field/date_field_input.html" with field=payment_form.next_due_date %}
+      {% include "common/field/text_field_input.html" with field=payment_form.next_due_amount %}
+      {% include "common/field/text_field_input.html" with field=payment_form.future_prin_amt %}
+      {% include "common/field/text_field_input.html" with field=payment_form.remain_prin %}
+      {% include "common/field/text_field_input.html" with field=payment_form.pos_bom %}
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

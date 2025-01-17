@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock %}</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+.primary_background_color {
+    background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
+}
+
+.active_tab{
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
+  font-weight: 600;
+}
+
+  </style>
+    {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
+  </head>
+  <body>
+    <style>
+      .custom-width {
+        width: 250px;
+      }
+    </style>
+    <div class="content-wrapper">
+      <nav class="navbar navbar-expand-xl navbar-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+      </nav>
+      <div class="d-flex">
+        <div class="custom-width d-flex flex-column">
+          <a href="">Home</a>
+          <a href="">Dashboard Autocall</a>
+          <a href="">Telesales v2</a>
+          <a href="">Activities</a>
+          <a href="">Manage Telesales</a>
+          <a href="">Lịch sử cuộc gọi</a>
+          <a href="">Setting</a>
+          <a href="">Voice Blaster</a>
+          <a href="">Masking phone</a>
+        </div>
+        <div class="flex-fill">
+          {% block content %} {% endblock %}
+        </div>
+      </div>
+    </div>
+    {% block js %} {% endblock %}
+  </body>
+</html>

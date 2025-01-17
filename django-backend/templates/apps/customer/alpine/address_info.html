@@ -1,0 +1,15 @@
+<form method="POST" action="{% url 'alpine-index' %}">
+  {% csrf_token %}
+  <input type="hidden" name="active_tab" value="address-info">
+<div class="row">
+  <!-- Left Column -->
+  <div class="col-md-10">
+    {% include "common/field/text_field_input.html" with field=address_form.permanent_address %}
+    {% include "common/field/text_field_input.html" with field=address_form.temporary_address %}
+    {% include "common/field/text_field_input.html" with field=address_form.region %}
+    {% include "common/field/text_field_input.html" with field=address_form.district %}
+    {% include "common/field/text_field_input.html" with field=address_form.province %}
+  </div>
+</div>
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>

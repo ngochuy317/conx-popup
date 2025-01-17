@@ -1,4 +1,4 @@
-{% extends 'common/base.html' %} 
+{% extends 'common/htmx_base.html' %} 
 {% block title %}Customer{% endblock %}
 {%block content %}
 <h2>Using HTMX</h2>
@@ -12,7 +12,7 @@
       <li
         style="width: 250px; font-size: smaller"
         class="tab text-center align-middle p-2"
-        hx-get="{% url 'customer-info' %}"
+        hx-get="{% url 'htmx-customer-info' %}"
         hx-target="#tab-content"
         hx-swap="innerHTML"
         hx-trigger="click"
@@ -23,7 +23,7 @@
       <li
         style="width: 250px; font-size: smaller"
         class="tab text-center align-middle p-2"
-        hx-get="{% url 'contact-info' %}"
+        hx-get="{% url 'htmx-contact-info' %}"
         hx-target="#tab-content"
         hx-swap="innerHTML"
         hx-trigger="click"
@@ -35,7 +35,7 @@
         style="width: 250px; font-size: smaller"
         class="tab text-center align-middle p-2"
         type="button"
-        hx-get="{% url 'payment-info' %}"
+        hx-get="{% url 'htmx-payment-info' %}"
         hx-target="#tab-content"
         hx-swap="innerHTML"
         hx-trigger="click"
@@ -47,7 +47,7 @@
         style="width: 250px; font-size: smaller"
         class="tab align-middle p-2"
         type="button"
-        hx-get="{% url 'product-info' %}"
+        hx-get="{% url 'htmx-product-info' %}"
         hx-target="#tab-content"
         hx-swap="innerHTML"
         hx-trigger="click"
@@ -59,7 +59,7 @@
         style="width: 250px; font-size: smaller"
         class="tab align-middle p-2"
         type="button"
-        hx-get="{% url 'address-info' %}"
+        hx-get="{% url 'htmx-address-info' %}"
         hx-target="#tab-content"
         hx-swap="innerHTML"
         hx-trigger="click"
@@ -71,7 +71,7 @@
         style="width: 250px; font-size: smaller"
         class="tab align-middle p-2"
         type="button"
-        hx-get="{% url 'phone-info' %}"
+        hx-get="{% url 'htmx-phone-info' %}"
         hx-target="#tab-content"
         hx-swap="innerHTML"
         hx-trigger="click"

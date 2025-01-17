@@ -1,0 +1,37 @@
+<form method="POST" action="{% url 'alpine-index' %}">
+  {% csrf_token %}
+  <input type="hidden" name="active_tab" value="contact-info">
+  <div class="row">
+  <!-- Left Column -->
+  <div class="col-md-6">
+    {% include "common/field/text_field_input.html" with field=contact_form.loan_id %}
+    {% include "common/field/text_field_input.html" with field=contact_form.contract_number %}
+    {% include "common/field/date_field_input.html" with field=contact_form.contract_date %}
+    {% include "common/field/text_field_input.html" with field=contact_form.current_account %}
+    {% include "common/field/text_field_input.html" with field=contact_form.dpd_current %}
+    {% include "common/field/text_field_input.html" with field=contact_form.dpd_assign %}
+    {% include "common/field/text_field_input.html" with field=contact_form.mob %}
+    {% include "common/field/text_field_input.html" with field=contact_form.loan_amount %}
+    {% include "common/field/text_field_input.html" with field=contact_form.loan_term %}
+    {% include "common/field/text_field_input.html" with field=contact_form.obs_due_no %}
+    {% include "common/field/date_field_input.html" with field=contact_form.payment_request_date %}
+    {% include "common/field/number_field_input.html" with field=contact_form.late_days %}
+    {% include "common/field/number_field_input.html" with field=contact_form.monthly_payment %}
+    {% include "common/field/date_field_input.html" with field=contact_form.assign_invalid_date %}
+  </div>
+
+  <!-- Right Column -->
+  <div class="col-md-6">
+    {% include "common/field/text_field_input.html" with field=contact_form.penalty_amount %}
+    {% include "common/field/text_field_input.html" with field=contact_form.interest_amount %}
+    {% include "common/field/text_field_input.html" with field=contact_form.principal_amount %}
+    {% include "common/field/text_field_input.html" with field=contact_form.pos_assign %}
+    {% include "common/field/text_field_input.html" with field=contact_form.total_payment %}
+    {% include "common/field/text_field_input.html" with field=contact_form.last_result_final %}
+    {% include "common/field/text_field_input.html" with field=contact_form.total_amount %}
+    {% include "common/field/date_field_input.html" with field=contact_form.date_start %}
+    {% include "common/field/date_field_input.html" with field=contact_form.date_end %}
+  </div>
+</div>
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>

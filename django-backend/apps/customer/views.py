@@ -27,10 +27,11 @@ from .serializers import (
     PaymentInfoSerializer,
     ContactInfoSerializer,
     CustomerInfoSerializer,
+    CallOutcomeSerializer,
 )
 
 
-def init_call_outcome_info_data() -> CallOutcome:
+def init_call_outcome_data() -> CallOutcome:
     call_outcome_info_instance = CallOutcome.objects.first()
     if not call_outcome_info_instance:
         call_outcome_info_instance = CallOutcome.objects.create(**{
@@ -155,90 +156,164 @@ def init_payment_info_data() -> PaymentInfo:
     return payment_info_instance
 
 
-def htmx(request: HttpRequest):
+def alpine_index(request: HttpRequest):
+    post_data = request.POST or None
+    context = {}
+    
+    customer_info_instance = init_customer_info_data()
+    customer_form = CustomerInfoForm(instance=customer_info_instance)
+    phone_info_instance = init_phone_info_data()
+    phone_form = PhoneInfoForm(instance=phone_info_instance)
+    product_info_instance = init_product_info_data()
+    product_form = ProductInfoForm(instance=product_info_instance)
+    contact_info_instance = init_contact_info_data()
+    contact_form = ContactInfoForm(instance=contact_info_instance)
+    payment_info_instance = init_payment_info_data()
+    payment_form = PaymentInfoForm(instance=payment_info_instance)
+    address_info_instance = init_address_info_data()
+    address_form = AddressInfoForm(instance=address_info_instance)
+
+    if request.method == "POST":
+        active_tab = request.POST.get("active_tab", "customer-info")
+        context["active_tab"] = active_tab
+        if active_tab == "customer-info":
+            customer_form = CustomerInfoForm(post_data, instance=customer_info_instance)
+            if customer_form.is_valid():
+                customer_form.save()
+                return redirect('alpine-index')
+        elif active_tab == "contact-info":
+            contact_form = ContactInfoForm(post_data, instance=contact_info_instance)
+            if contact_form.is_valid():
+                contact_form.save()
+        elif active_tab == "payment-info":
+            payment_form = PaymentInfoForm(post_data, instance=payment_info_instance)
+            if payment_form.is_valid():
+                payment_form.save()
+        elif active_tab == "product-info":
+            product_form = ProductInfoForm(post_data, instance=product_info_instance)
+            if product_form.is_valid():
+                product_form.save()
+        elif active_tab == "phone-info":
+            phone_form = PhoneInfoForm(post_data, instance=phone_info_instance)
+            if phone_form.is_valid():
+                phone_form.save()
+        elif active_tab == "address-info":
+            address_form = AddressInfoForm(post_data, instance=address_info_instance)
+            if address_form.is_valid():
+                address_form.save()
+    context.update({
+        "customer_form": customer_form,
+        "contact_form": contact_form,
+        "payment_form": payment_form,
+        "product_form": product_form,
+        "phone_form": phone_form,
+        "address_form": address_form,
+    })
+    
+    return render(request, "apps/customer/alpine/index.html", context)
+
+
+def alpine_phone_info(request: HttpRequest) -> HttpResponse:
+    phone_info_instance = init_phone_info_data()
+    phone_form = PhoneInfoForm(request.POST or None, instance=phone_info_instance)
+
     context = {
-        "active_tab": "customer-info",
+        "phone_form": phone_form,
+        "active_tab": "phone-info",
     }
-    return render(request, "apps/customer/htmx.html")
+    if phone_form.is_valid():
+        phone_form.save()
+
+        return redirect('alpine-index')
+        return render(request, "apps/customer/alpine/index.html", context)
+    # context = {
+    #     "form": phone_form,
+    #     "active_tab": "phone-info",
+    # }
+    # return render(request, "apps/customer/htmx/phone_info.html", context)
 
 
-def phone_info(request: HttpRequest) -> HttpResponse:
+def htmx_index(request: HttpRequest):
+    return render(request, "apps/customer/htmx/index.html")
+
+
+def htmx_phone_info(request: HttpRequest) -> HttpResponse:
     phone_info_instance = init_phone_info_data()
     phone_form = PhoneInfoForm(request.POST or None, instance=phone_info_instance)
     if request.method == "POST" and phone_form.is_valid():
         phone_form.save()
-        return redirect('phone-info')
+        return redirect('htmx-phone-info')
     context = {
         "form": phone_form,
         "active_tab": "phone-info",
     }
-    return render(request, "apps/customer/phone_info.html", context)
+    return render(request, "apps/customer/htmx/phone_info.html", context)
 
 
-def product_info(request: HttpRequest) -> HttpResponse:
+def htmx_product_info(request: HttpRequest) -> HttpResponse:
     product_info_instance = init_product_info_data()
     product_form = ProductInfoForm(request.POST or None, instance=product_info_instance)
     if request.method == "POST" and product_form.is_valid():
         product_form.save()
-        return redirect('product-info')
+        return redirect('htmx-product-info')
     context = {
         "form": product_form,
         "active_tab": "product-info",
     }
-    return render(request, "apps/customer/product_info.html", context)
+    return render(request, "apps/customer/htmx/product_info.html", context)
 
 
-def contact_info(request: HttpRequest) -> HttpResponse:
+def htmx_contact_info(request: HttpRequest) -> HttpResponse:
     contact_info_instance = init_contact_info_data()
     contact_form = ContactInfoForm(request.POST or None, instance=contact_info_instance)
     if request.method == "POST" and contact_form.is_valid():
         contact_form.save()
-        return redirect('contact-info')
+        return redirect('htmx-contact-info')
     context = {
         "form": contact_form,
         "active_tab": "contact-info",
     }
     
-    return render(request, "apps/customer/contact_info.html", context)
+    return render(request, "apps/customer/htmx/contact_info.html", context)
 
 
-def customer_info(request: HttpRequest) -> HttpResponse:
+def htmx_customer_info(request: HttpRequest) -> HttpResponse:
     customer_info_instance = init_customer_info_data()
     customer_form = CustomerInfoForm(request.POST or None, instance=customer_info_instance)
     if request.method == "POST" and customer_form.is_valid():
         customer_form.save()
-        return redirect('customer-info')
+        return redirect('htmx-customer-info')
     context = {
         "form": customer_form,
         "active_tab": "customer-info",
     }
-    return render(request, "apps/customer/customer_info.html", context)
+    return render(request, "apps/customer/htmx/customer_info.html", context)
 
 
-def address_info(request: HttpRequest) -> HttpResponse:
+def htmx_address_info(request: HttpRequest) -> HttpResponse:
     address_info_instance = init_address_info_data()
     address_form = AddressInfoForm(request.POST or None, instance=address_info_instance)
     if request.method == "POST" and address_form.is_valid():
         address_form.save()
-        return redirect('address-info')
+        return redirect('htmx-address-info')
     context = {
         "form": address_form,
         "active_tab": "address-info",
     }
-    return render(request, "apps/customer/address_info.html", context)
+    return render(request, "apps/customer/htmx/address_info.html", context)
 
 
-def payment_info(request: HttpRequest) -> HttpResponse:
+def htmx_payment_info(request: HttpRequest) -> HttpResponse:
     payment_info_instance = init_payment_info_data()
     payment_form = PaymentInfoForm(request.POST or None, instance=payment_info_instance)
     if request.method == "POST" and payment_form.is_valid():
         payment_form.save()
-        return redirect('payment-info')
+        return redirect('htmx-payment-info')
     context = {
         "form": payment_form,
         "active_tab": "payment-info",
     }
-    return render(request, "apps/customer/payment_info.html", context)
+    return render(request, "apps/customer/htmx/payment_info.html", context)
 
 
 @api_view(['GET', 'POST'])
@@ -295,6 +370,21 @@ def customer_info_api(request: HttpRequest) -> Response:
 
     if request.method == 'POST':
         serializer = CustomerInfoSerializer(customer_info_instance, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'POST'])
+def call_outcome_api(request: HttpRequest) -> Response:
+    calloutcome_instance = init_call_outcome_data()
+    if request.method == 'GET':
+        serializer = CallOutcomeSerializer(calloutcome_instance)
+        return Response(serializer.data)
+
+    if request.method == 'POST':
+        serializer = CallOutcomeSerializer(calloutcome_instance, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

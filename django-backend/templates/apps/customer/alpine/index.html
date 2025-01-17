@@ -1,0 +1,112 @@
+{% extends 'common/alpine_base.html' %} 
+{% block title %}Customer{% endblock %}
+{%block content %}
+<h2>Using Alpinejs</h2>
+<div class="d-flex">
+    <div x-data class="w-50 p-2 m-2 border" id="leftTab">
+      <div class="p-2 border primary_background_color d-flex item-center">
+        <span class="lh-sm fw-semibold fs-5">THÔNG TIN KHÁCH HÀNG</span>
+      </div>
+  
+      <ul class="d-flex list-inline fs-6 p-2 pb-0 border-bottom text-center">
+        <li
+          @click="$store.leftActiveTab.current = 'customer-info'"
+          :class="{'active_tab': $store.leftActiveTab.current == 'customer-info'}"
+          style="width: 250px; font-size: smaller"
+          class="tab text-center align-middle p-2"
+          type="button"
+          id="customer-info"
+        >
+          Customer Info
+        </li>
+        <li
+          @click="$store.leftActiveTab.current = 'contact-info'"
+          :class="{'active_tab': $store.leftActiveTab.current === 'contact-info'}"
+          style="width: 250px; font-size: smaller"
+          class="tab text-center align-middle p-2"
+          type="button"
+          id="contact-info"
+        >
+          Contact Info
+        </li>
+        <li
+          @click="$store.leftActiveTab.current = 'payment-info'"
+          :class="{'active_tab': $store.leftActiveTab.current === 'payment-info'}"
+          style="width: 250px; font-size: smaller"
+          class="tab text-center align-middle p-2"
+          type="button"
+          id="payment-info"
+        >
+          Payment Info
+        </li>
+        <li 
+          @click="$store.leftActiveTab.current = 'product-info'"
+          :class="{'active_tab': $store.leftActiveTab.current === 'product-info'}"
+          style="width: 250px; font-size: smaller"
+          class="tab align-middle p-2"
+          type="button"
+          id="product-info"
+        >
+          Product Info
+        </li>
+        <li
+          @click="$store.leftActiveTab.current = 'address-info'"
+          :class="{'active_tab': $store.leftActiveTab.current === 'address-info'}"
+          style="width: 250px; font-size: smaller"
+          class="tab align-middle p-2"
+          type="button"
+          id="address-info"
+        >
+          Address Info
+        </li>
+        <li 
+          @click="$store.leftActiveTab.current = 'phone-info'"
+          :class="{'active_tab': $store.leftActiveTab.current === 'phone-info'}"
+          style="width: 250px; font-size: smaller"
+          class="tab align-middle p-2"
+          type="button"
+          id="phone-info"
+        >
+          Phone Info
+        </li>
+      </ul>
+  
+      <div class="p-2 pt-0">
+        <div class="p-2 border primary_background_color d-flex item-cente">
+          <span class="lh-sm fw-semibold">CUSTOMER INFO</span>
+        </div>
+        <div class="p-2" id="tab-content">
+            <div x-show="$store.leftActiveTab.current === 'customer-info'" x-transition>
+                {% include "apps/customer/alpine/customer_info.html" %}
+            </div>
+            <div x-show="$store.leftActiveTab.current === 'contact-info'" x-transition>
+                {% include "apps/customer/alpine/contact_info.html" %}
+            </div>
+            <div x-show="$store.leftActiveTab.current === 'payment-info'" x-transition>
+                {% include "apps/customer/alpine/payment_info.html" %}
+            </div>
+            <div x-show="$store.leftActiveTab.current === 'product-info'" x-transition>
+                {% include "apps/customer/alpine/product_info.html" %}
+            </div>
+            <div x-show="$store.leftActiveTab.current === 'address-info'" x-transition>
+                {% include "apps/customer/alpine/address_info.html" %}
+            </div>
+            <div x-show="$store.leftActiveTab.current === 'phone-info'" x-transition>
+                {% include "apps/customer/alpine/phone_info.html" %}
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-50 p-2">Section 2</div>
+  </div>
+{% endblock %}
+{% block js %}
+<script>
+    document.addEventListener('alpine:init', () => {
+        console.log('alpine:init');
+        Alpine.store('leftActiveTab', {
+            current: "{{ active_tab|default:'customer-info'|escapejs }}",
+        })
+    })
+</script>
+{% endblock %}

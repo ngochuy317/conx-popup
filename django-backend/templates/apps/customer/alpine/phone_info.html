@@ -1,0 +1,22 @@
+<form method="POST" action="{% url 'alpine-index' %}">
+    <input type="hidden" name="active_tab" value="phone-info">
+    {% csrf_token %}
+    <div class="row">
+        <!-- Left Column -->
+        <div class="col-md-6">
+            {% include "common/field/text_field_input.html" with field=phone_form.spouse_name %}
+            {% include "common/field/text_field_input.html" with field=phone_form.contact_name_1 %}
+            {% include "common/field/date_field_input.html" with field=phone_form.contact_relationship_1 %}
+            {% include "common/field/text_field_input.html" with field=phone_form.contact_name_2 %}
+            {% include "common/field/text_field_input.html" with field=phone_form.contact_relationship_2 %}
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-md-6">
+            {% include "common/field/text_field_input.html" with field=phone_form.family_book %}
+            {% include "common/field/text_field_input.html" with field=phone_form.other_contact_name %}
+            {% include "common/field/text_field_input.html" with field=phone_form.other_contact_name_2 %}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" @click="$store.leftActiveTab.current = 'phone-info'">Submit</button>
+</form>

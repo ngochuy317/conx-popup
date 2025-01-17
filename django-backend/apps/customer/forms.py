@@ -34,7 +34,7 @@ class ProductInfoForm(forms.ModelForm):
 class CustomerInfoForm(forms.ModelForm):
     name = forms.CharField(required=False, label="Tên KH")
     id_number = forms.CharField(max_length=20, label="CCCD")
-    day_of_birth = forms.DateField(label="Ngày sinh", required=False)
+    day_of_birth = forms.DateField(label="Ngày sinh", required=False, widget=forms.DateInput(format='%d/%m/%Y'))
     gender = forms.CharField(label="Giới tính", required=False)
     contract_number = forms.CharField(label="Số hợp đồng", required=False)
     company_name = forms.CharField(label="Tên công ty", required=False)
