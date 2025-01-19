@@ -88,7 +88,51 @@
       <div class="p-2" id="tab-content"></div>
     </div>
   </div>
-  <div class="w-50 p-2">Section 2</div>
+  <div x-data class="w-50 p-2 m-2 border" id="rightTab">
+    <div class="p-2 border primary_background_color d-flex item-center">
+      <span class="lh-sm fw-semibold fs-5">Section</span>
+    </div>
+    <ul class="d-flex list-inline fs-6 p-2 pb-0 border-bottom text-center">
+      <li
+        @click="$store.rightActiveTab.current = 'call-outcome'"
+        :class="{'active_tab': $store.rightActiveTab.current == 'call-outcome'}"
+        style="width: 250px; font-size: smaller"
+        class="tab text-center align-middle p-2"
+        type="button"
+      >
+        Call Outcome
+      </li>
+      <li
+        @click="$store.rightActiveTab.current = 'history-all'"
+        :class="{'active_tab': $store.rightActiveTab.current === 'history-all'}"
+        style="width: 250px; font-size: smaller"
+        class="tab text-center align-middle p-2"
+        type="button"
+      >
+        History all
+      </li>
+      <li
+        @click="$store.rightActiveTab.current = 'history-limit'"
+        :class="{'active_tab': $store.rightActiveTab.current === 'history-limit'}"
+        style="width: 250px; font-size: smaller"
+        class="tab text-center align-middle p-2"
+        type="button"
+      >
+        History limit
+      </li>
+    </ul>
+    <div class="p-2" id="right-tab-content">
+      <div x-show="$store.rightActiveTab.current === 'call-outcome'" x-transition>
+          {% include "apps/customer/alpine/call_outcome.html" %}
+      </div>
+      <div x-show="$store.rightActiveTab.current === 'history-all'" x-transition>
+          {% include "apps/customer/alpine/history_all.html" %}
+      </div>
+      <div x-show="$store.rightActiveTab.current === 'history-limit'" x-transition>
+          {% include "apps/customer/alpine/history_limit.html" %}
+      </div>
+  </div>
+</div>
 </div>
 
 {% endblock %} {% block js %}
