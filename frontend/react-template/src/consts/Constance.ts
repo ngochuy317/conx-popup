@@ -5,3 +5,4 @@ export const PAYMENT_API_PATH = "payment_info_api";
 export const PRODUCT_API_PATH = "product_info_api";
 export const CONTACT_API_PATH = "contact_info_api";
 export const ADDRESS_API_PATH = "address_info_api";
+export const CALL_OUTCOME_API_PATH = "call_outcome_api";

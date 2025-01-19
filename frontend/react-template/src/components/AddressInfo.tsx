@@ -123,7 +123,7 @@ export const AddressInfo = () => {
                       name={field.name}
                       value={values[field.name as keyof AddressInfoModel]}
                       handleBlur={handleBlur}
-                      defaultValue={field.defaultValue}
+                      defaultValue={field.defaultValue as string}
                       options={field.options}
                     />
                   )}

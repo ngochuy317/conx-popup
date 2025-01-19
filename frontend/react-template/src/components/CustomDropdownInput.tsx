@@ -43,14 +43,14 @@ export const CustomDropdownInput = ({
     <div className="w-full">
       <div className="flex items-center">
         {label && (
-          <div className="w-56 align-center">
+          <div className="w-32 align-center">
             <p className="text-left flex-end text-md">
               {label}
               {required && <span className="text-red-500">{"*"}</span>}
             </p>
           </div>
         )}
-        <FormControl fullWidth sx={{ ml: 2 }}>
+        <FormControl style={{ width: "17rem" }} fullWidth sx={{ ml: 2 }}>
           <Select
             fullWidth
             name={name}

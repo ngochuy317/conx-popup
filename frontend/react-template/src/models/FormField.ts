@@ -1,8 +1,8 @@
 export interface FormField {
   label: string;
-  type: "text" | "dropdown" | "date";
+  type: "text" | "dropdown" | "date" | "checkbox" | "textarea";
   name: string;
-  defaultValue: string;
+  defaultValue: string | boolean;
   options?: string[];
   required?: boolean;
 }
