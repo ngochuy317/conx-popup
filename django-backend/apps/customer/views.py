@@ -12,6 +12,7 @@ from .forms import (
     AddressInfoForm,
     ProductInfoForm,
     PhoneInfoForm,
+    CallOutcomeForm,
 )
 from .models import (
     ContactInfo,
@@ -28,6 +29,7 @@ from .serializers import (
     ContactInfoSerializer,
     CustomerInfoSerializer,
     CallOutcomeSerializer,
+    PhoneInfoSerializer,
 )
 
 
@@ -370,6 +372,21 @@ def customer_info_api(request: HttpRequest) -> Response:
 
     if request.method == 'POST':
         serializer = CustomerInfoSerializer(customer_info_instance, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'POST'])
+def phone_info_api(request: HttpRequest) -> Response:
+    phone_info_instance = init_phone_info_data()
+    if request.method == 'GET':
+        serializer = PhoneInfoSerializer(phone_info_instance)
+        return Response(serializer.data)
+
+    if request.method == 'POST':
+        serializer = PhoneInfoSerializer(phone_info_instance, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

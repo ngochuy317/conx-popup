@@ -1,5 +1,12 @@
 from rest_framework import serializers
-from .models import AddressInfo, PaymentInfo, ContactInfo, CustomerInfo, CallOutcome
+from .models import (
+    AddressInfo,
+    PaymentInfo,
+    ContactInfo,
+    CustomerInfo,
+    CallOutcome,
+    PhoneInfo,
+)
 
 
 import re
@@ -78,4 +85,10 @@ class CustomerInfoSerializer(CamelCaseMixin, serializers.ModelSerializer):
 class CallOutcomeSerializer(CamelCaseMixin, serializers.ModelSerializer):
     class Meta:
         model = CallOutcome
+        fields = '__all__'
+
+
+class PhoneInfoSerializer(CamelCaseMixin, serializers.ModelSerializer):
+    class Meta:
+        model = PhoneInfo
         fields = '__all__'
