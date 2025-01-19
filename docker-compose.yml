@@ -13,7 +13,6 @@ services:
   react-app:
     container_name: react-app
     build: ./frontend/react-template
-    # command: ["tail", "-f", "/dev/null"]
     volumes:
       - ./frontend/react-template:/app
       - /app/node_modules
@@ -23,3 +22,4 @@ services:
       - CHOKIDAR_USEPOLLING=true # create-ui-app <= 5.x
       - WATCHPACK_POLLING=true # create-ui-app >= 5.x
       - NODE_OPTIONS=--openssl-legacy-provider
+      - REACT_APP_ENV=docker
