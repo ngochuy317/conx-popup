@@ -8,7 +8,7 @@ services:
     volumes:
       - ./django-backend:/code
     ports:
-      - "28000:8000"
+      - "28000:28000"
   
   react-app:
     container_name: react-app

@@ -131,15 +131,6 @@
       </li>
     </ul>
     <div class="p-2" id="right-tab-content">
-      <div x-show="$store.rightActiveTab.current === 'call-outcome'" x-transition>
-          {% include "apps/customer/alpine/call_outcome.html" %}
-      </div>
-      <div x-show="$store.rightActiveTab.current === 'history-all'" x-transition>
-          {% include "apps/customer/alpine/history_all.html" %}
-      </div>
-      <div x-show="$store.rightActiveTab.current === 'history-limit'" x-transition>
-          {% include "apps/customer/alpine/history_limit.html" %}
-      </div>
   </div>
 </div>
 </div>

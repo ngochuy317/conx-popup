@@ -6,7 +6,7 @@
         type="checkbox" 
         class="form-check-input" 
         name="{{ field.name }}" 
-        {% if field.value %}checked{% endif %}
+        {{ field.value |yesno:"checked," }}
     >
     {% if field.errors %}
         <div class="text-danger">

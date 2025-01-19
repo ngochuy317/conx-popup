@@ -1,4 +1,4 @@
-<form method="POST" action="{% url 'htmx-call-outcome' %}">
+<form hx-post="{% url 'htmx-call-outcome' %}">
     {% csrf_token %}
     <div class="row mt-2">
         <div class="col-md-6">
