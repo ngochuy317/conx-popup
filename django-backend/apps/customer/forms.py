@@ -6,6 +6,7 @@ from .models import (
     ContactInfo,
     ProductInfo,
     PhoneInfo,
+    CallOutcome,
 )
 
 
@@ -52,12 +53,12 @@ class ContactInfoForm(forms.ModelForm):
     contract_number = forms.CharField(required=False, label="Số hợp đồng")
     contract_date = forms.DateField(required=False, label="Contract Date")
     current_account = forms.CharField(required=False, label="Current Account")
-    dpd_current = forms.CharField(required=False, label="DPD Current")
-    dpd_assign = forms.CharField(required=False, label="DPD Assign")
-    mob = forms.CharField(required=False, label="MOB")
+    dpd_current = forms.IntegerField(required=False, label="DPD Current")
+    dpd_assign = forms.IntegerField(label="DPD Assign")
+    mob = forms.IntegerField(required=False, label="MOB")
     loan_amount = forms.CharField(required=False, label="Số tiền vay")
-    loan_term = forms.CharField(required=False, label="Số kỳ hạn vay")
-    obs_due_no = forms.CharField(required=False, label="OBS Due No")
+    loan_term = forms.IntegerField(required=False, label="Số kỳ hạn vay")
+    obs_due_no = forms.IntegerField(required=False, label="OBS Due No")
     payment_request_date = forms.DateField(required=False, label="Ngày đề nghị thanh toán")
     assign_invalid_date = forms.DateField(required=False, label="Assign Invalid Date")
     penalty_amount = forms.CharField(required=False, label="Số tiền phạt phát sinh")
@@ -105,4 +106,15 @@ class AddressInfoForm(forms.ModelForm):
 
     class Meta:
         model = AddressInfo
+        fields = '__all__'
+
+
+class CallOutcomeForm(forms.ModelForm):
+    pds = forms.BooleanField(label="Trả PDS")
+    note = forms.Textarea()
+    payment_date = forms.DateField(required=False, label="Ngày hứa thanh toán")
+    payment_amount = forms.IntegerField(required=False, label="Số tiền hứa thanh toán")
+
+    class Meta:
+        model = CallOutcome
         fields = '__all__'
