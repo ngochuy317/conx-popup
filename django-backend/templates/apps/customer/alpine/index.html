@@ -2,7 +2,7 @@
 {% block title %}Customer{% endblock %}
 {%block content %}
 <h2>Using Alpinejs</h2>
-<div class="d-flex">
+<div class="d-flex viewport-width flex-wrap">
     <div x-data class="w-50 p-2 m-2 border" id="leftTab">
       <div class="p-2 border primary_background_color d-flex item-center">
         <span class="lh-sm fw-semibold fs-5">THÔNG TIN KHÁCH HÀNG</span>
@@ -99,7 +99,7 @@
     </div>
     <div x-data class="w-50 p-2 m-2 border" id="rightTab">
       <div class="p-2 border primary_background_color d-flex item-center">
-        <span class="lh-sm fw-semibold fs-5">Section</span>
+      <span class="lh-sm fw-semibold fs-5">Section</span>
       </div>
       <ul class="d-flex list-inline fs-6 p-2 pb-0 border-bottom text-center">
         <li
@@ -140,7 +140,7 @@
         <div x-show="$store.rightActiveTab.current === 'history-limit'" x-transition>
             {% include "apps/customer/alpine/history_limit.html" %}
         </div>
-    </div>
+      </div>
   </div>
 </div>
 {% endblock %}
