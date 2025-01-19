@@ -160,8 +160,25 @@ export const CallOutcome = () => {
                       options={field.options}
                     />
                   )}
-                  {field.type === "checkbox" && <CustomCheckbox />}
-                  {field.type === "textarea" && <CustomTextAreaInput />}
+                  {field.type === "checkbox" && (
+                    <div className="w-96 mr-10">
+                      <CustomCheckbox
+                        checked={Boolean(
+                          values[field.name as keyof CallOutcomeInfoModel]
+                        )}
+                        name={field.name}
+                        defaultValue={field?.defaultValue as boolean}
+                        label={field.label}
+                      />
+                    </div>
+                  )}
+                  {field.type === "textarea" && (
+                    <CustomTextAreaInput
+                      name={field.name}
+                      defaultValue={field?.defaultValue as string}
+                      label={field.label}
+                    />
+                  )}
                 </div>
               ))}
             </div>

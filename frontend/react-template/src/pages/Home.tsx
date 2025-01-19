@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { CommonFormWrapper } from "../components/CommonFormWrapper";
-import { TabBarProps } from "../components/TabBar";
 import { UserInfo } from "../components/UserInfo";
 import { ContactInfo } from "../components/ContactInfo";
 import { PaymentInfo } from "../components/PaymentInfo";
@@ -13,7 +11,6 @@ import { HistoryLimit } from "../components/HistoryLimit";
 import { HistoryAll } from "../components/HistoryAll";
 
 export const Home = () => {
-  const [activeTab, setActiveTab] = useState("user-info");
   const customerTabItems = [
     { value: "user-info", label: "Customer Info", component: <UserInfo /> },
     {
@@ -56,20 +53,10 @@ export const Home = () => {
       component: <HistoryLimit />,
     },
   ];
-  const tabBarProps: TabBarProps = {
-    items: customerTabItems,
-    onActiveTab: setActiveTab,
-  };
-
-  const renderActiveComponent = () => {
-    return customerTabItems.find((tab) => {
-      return tab.value === activeTab;
-    })?.component;
-  };
 
   return (
-    <div className="flex gap-5">
-      <div className="flex-1">
+    <div className="flex gap-5 flex-wrap">
+      <div>
         <MultiTabsDashboard
           title="Thông Tin Khách Hàng"
           tabItems={customerTabItems}
@@ -78,7 +65,7 @@ export const Home = () => {
           <CommonFormWrapper title="HIDDEN FOR NORMAL USER"></CommonFormWrapper>
         </div>
       </div>
-      <div className="flex-1">
+      <div>
         <MultiTabsDashboard title="Section" tabItems={sectionTabItems} />
       </div>
     </div>

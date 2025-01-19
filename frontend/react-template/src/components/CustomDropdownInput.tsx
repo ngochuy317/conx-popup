@@ -53,6 +53,7 @@ export const CustomDropdownInput = ({
         <FormControl style={{ width: "17rem" }} fullWidth sx={{ ml: 2 }}>
           <Select
             fullWidth
+            aria-placeholder={placeholder}
             name={name}
             onChange={onChange}
             onBlur={onBlur}
