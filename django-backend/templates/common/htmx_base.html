@@ -29,17 +29,7 @@
         <a class="navbar-brand" href="#">Navbar</a>
       </nav>
       <div class="d-flex">
-        <div class="custom-width d-flex flex-column">
-          <a href="">Home</a>
-          <a href="">Dashboard Autocall</a>
-          <a href="">Telesales v2</a>
-          <a href="">Activities</a>
-          <a href="">Manage Telesales</a>
-          <a href="">Lịch sử cuộc gọi</a>
-          <a href="">Setting</a>
-          <a href="">Voice Blaster</a>
-          <a href="">Masking phone</a>
-        </div>
+        {% include "common/side_bar.html" %}
         <div class="flex-fill">
           {% block content %} {% endblock %}
         </div>

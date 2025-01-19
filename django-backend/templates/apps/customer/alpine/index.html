@@ -148,10 +148,10 @@
 <script>
     document.addEventListener('alpine:init', () => {
         Alpine.store('leftActiveTab', {
-            current: "{{ active_tab|default:'customer-info'|escapejs }}",
+            current: "{{ left_active_tab|default:'customer-info'|escapejs }}",
         });
         Alpine.store('rightActiveTab', {
-            current: "{{ active_tab|default:'call-outcome'|escapejs }}",
+            current: "{{ right_active_tab|default:'call-outcome'|escapejs }}",
         })
     })
 </script>

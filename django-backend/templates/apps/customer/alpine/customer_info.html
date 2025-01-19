@@ -1,6 +1,6 @@
 <form method="POST" action="{% url 'alpine-index' %}">
     {% csrf_token %}
-    <input type="hidden" name="active_tab" value="customer-info">
+    <input type="hidden" name="left_active_tab" value="customer-info">
     <div 
     style="padding-right: 2rem;padding-left: 2rem;"
     class="row mt-3">
@@ -9,7 +9,7 @@
             {% include "common/field/text_field_input.html" with field=customer_form.name %}
             <div class="form-group mb-5 d-flex">
                 <label style="width: 250px;">Giới tính</label>
-                <select class="form-control" id="gender" name="{{ customer_form.gender.name }}">
+                <select class="form-select" id="gender" name="{{ customer_form.gender.name }}">
                     <option {% if customer_form.gender.value == 'Male' %}selected{% endif %}>Male</option>
                     <option {% if customer_form.gender.value == 'Female' %}selected{% endif %}>Female</option>
                     <option {% if customer_form.gender.value == 'Other' %}selected{% endif %}>Other</option>

@@ -13,7 +13,7 @@
         style="width: 250px; font-size: smaller"
         class="tab text-center align-middle p-2"
         hx-get="{% url 'htmx-customer-info' %}"
-        hx-target="#tab-content"
+        hx-target="#left-tab-content"
         hx-swap="innerHTML"
         hx-trigger="click"
         id="customer-info"
@@ -24,7 +24,7 @@
         style="width: 250px; font-size: smaller"
         class="tab text-center align-middle p-2"
         hx-get="{% url 'htmx-contact-info' %}"
-        hx-target="#tab-content"
+        hx-target="#left-tab-content"
         hx-swap="innerHTML"
         hx-trigger="click"
         id="contact-info"
@@ -36,7 +36,7 @@
         class="tab text-center align-middle p-2"
         type="button"
         hx-get="{% url 'htmx-payment-info' %}"
-        hx-target="#tab-content"
+        hx-target="#left-tab-content"
         hx-swap="innerHTML"
         hx-trigger="click"
         id="payment-info"
@@ -48,7 +48,7 @@
         class="tab align-middle p-2"
         type="button"
         hx-get="{% url 'htmx-product-info' %}"
-        hx-target="#tab-content"
+        hx-target="#left-tab-content"
         hx-swap="innerHTML"
         hx-trigger="click"
         id="product-info"
@@ -60,7 +60,7 @@
         class="tab align-middle p-2"
         type="button"
         hx-get="{% url 'htmx-address-info' %}"
-        hx-target="#tab-content"
+        hx-target="#left-tab-content"
         hx-swap="innerHTML"
         hx-trigger="click"
         id="payment-info"
@@ -72,7 +72,7 @@
         class="tab align-middle p-2"
         type="button"
         hx-get="{% url 'htmx-phone-info' %}"
-        hx-target="#tab-content"
+        hx-target="#left-tab-content"
         hx-swap="innerHTML"
         hx-trigger="click"
         id="phone-info"
@@ -85,7 +85,7 @@
       <div class="p-2 border primary_background_color d-flex item-cente">
         <span class="lh-sm fw-semibold">CUSTOMER INFO</span>
       </div>
-      <div class="p-2" id="tab-content"></div>
+      <div class="p-2" id="left-tab-content"></div>
     </div>
   </div>
   <div x-data class="w-50 p-2 m-2 border" id="rightTab">
@@ -94,29 +94,38 @@
     </div>
     <ul class="d-flex list-inline fs-6 p-2 pb-0 border-bottom text-center">
       <li
-        @click="$store.rightActiveTab.current = 'call-outcome'"
-        :class="{'active_tab': $store.rightActiveTab.current == 'call-outcome'}"
         style="width: 250px; font-size: smaller"
-        class="tab text-center align-middle p-2"
+        class="tab align-middle p-2"
         type="button"
+        hx-get="{% url 'htmx-call-outcome' %}"
+        hx-target="#right-tab-content"
+        hx-swap="innerHTML"
+        hx-trigger="click"
+        id="call-outcome"
       >
         Call Outcome
       </li>
       <li
-        @click="$store.rightActiveTab.current = 'history-all'"
-        :class="{'active_tab': $store.rightActiveTab.current === 'history-all'}"
         style="width: 250px; font-size: smaller"
-        class="tab text-center align-middle p-2"
+        class="tab align-middle p-2"
         type="button"
+        hx-get="{% url 'htmx-history-all' %}"
+        hx-target="#right-tab-content"
+        hx-swap="innerHTML"
+        hx-trigger="click"
+        id="history-all"
       >
         History all
       </li>
       <li
-        @click="$store.rightActiveTab.current = 'history-limit'"
-        :class="{'active_tab': $store.rightActiveTab.current === 'history-limit'}"
         style="width: 250px; font-size: smaller"
-        class="tab text-center align-middle p-2"
+        class="tab align-middle p-2"
         type="button"
+        hx-get="{% url 'htmx-history-limit' %}"
+        hx-target="#right-tab-content"
+        hx-swap="innerHTML"
+        hx-trigger="click"
+        id="history-limit"
       >
         History limit
       </li>
@@ -139,18 +148,28 @@
 <script>
 
   document.body.addEventListener('htmx:xhr:loadend', function (event) {
-    if (event.target?.getAttribute('hx-target') === '#tab-content') {
+    if (event.target?.getAttribute('hx-target') === '#left-tab-content') {
       document.querySelectorAll("#leftTab .tab").forEach((tab) => tab.classList.remove("active_tab"));
+      event.target.classList.add("active_tab");
+    }
+    if (event.target?.getAttribute('hx-target') === '#right-tab-content') {
+      document.querySelectorAll("#rightTab .tab").forEach((tab) => tab.classList.remove("active_tab"));
       event.target.classList.add("active_tab");
     }
   });
 
   // Set default active tab
   document.addEventListener("DOMContentLoaded", function () {
-    const firstTab = document.querySelector("#leftTab .tab");
-    if (firstTab) {
-        firstTab.classList.add("active_tab");
-        firstTab.click(); // Trigger click event on the first tab
+    const firstLeftTab = document.querySelector("#leftTab .tab");
+    if (firstLeftTab) {
+        firstLeftTab.classList.add("active_tab");
+        firstLeftTab.click();
+    }
+
+    const firstRightTab = document.querySelector("#rightTab .tab");
+    if (firstRightTab) {
+        firstRightTab.classList.add("active_tab");
+        firstRightTab.click();
     }
   });
 </script>

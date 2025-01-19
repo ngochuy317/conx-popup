@@ -1,0 +1,34 @@
+<form method="POST" action="{% url 'htmx-call-outcome' %}">
+    {% csrf_token %}
+    <div class="row mt-2">
+        <div class="col-md-6">
+            {% include "common/field/boolean_field_input.html" with field=form.pds %}
+            <div class="form-group mb-5 d-flex">
+                <label style="width: 250px;">{{ form.contacted_person.label }}</label>
+                <select class="form-select" name="{{ form.contacted_person.name }}">
+                    <option selected>{{ form.contacted_person.value }}</option>
+                </select>
+            </div>
+            <div class="form-group mb-5 d-flex">
+                <label style="width: 250px;">{{ form.action_code.label }}</label>
+                <select class="form-select" name="{{ form.action_code.name }}">
+                    <option selected>{{ form.action_code.value }}</option>
+                </select>
+            </div>
+            <div class="form-group mb-5 d-flex">
+                <label style="width: 250px;">{{ form.reason_code.label }}</label>
+                <select class="form-select" name="{{ form.reason_code.name }}">
+                    <option selected>{{ form.reason_code.value }}</option>
+                </select>
+            </div>
+            
+        </div>
+        <div class="col-md-6">
+            {% include "common/field/boolean_field_input.html" with field=form.final %}
+            {% include "common/field/textarea_field_input.html" with field=form.note %}
+            {% include "common/field/date_field_input.html" with field=form.payment_date %}
+            {% include "common/field/number_field_input.html" with field=form.payment_amount %}
+        </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

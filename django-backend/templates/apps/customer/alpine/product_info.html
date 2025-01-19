@@ -1,6 +1,6 @@
 <form method="POST" action="{% url 'alpine-index' %}">
     {% csrf_token %}
-    <input type="hidden" name="active_tab" value="product-info">
+    <input type="hidden" name="left_active_tab" value="product-info">
     <div class="row">
       {% include "common/field/text_field_input.html" with field=product_form.product %}
   </div>

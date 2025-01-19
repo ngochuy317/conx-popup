@@ -174,35 +174,43 @@ def alpine_index(request: HttpRequest):
     payment_form = PaymentInfoForm(instance=payment_info_instance)
     address_info_instance = init_address_info_data()
     address_form = AddressInfoForm(instance=address_info_instance)
+    call_outcome_instance = init_call_outcome_data()
+    call_outcome_form = CallOutcomeForm(instance=call_outcome_instance)
 
     if request.method == "POST":
-        active_tab = request.POST.get("active_tab", "customer-info")
-        context["active_tab"] = active_tab
-        if active_tab == "customer-info":
+        left_active_tab = request.POST.get("left_active_tab")
+        right_active_tab = request.POST.get("right_active_tab")
+        if left_active_tab == "customer-info":
             customer_form = CustomerInfoForm(post_data, instance=customer_info_instance)
             if customer_form.is_valid():
                 customer_form.save()
-                return redirect('alpine-index')
-        elif active_tab == "contact-info":
+        elif left_active_tab == "contact-info":
             contact_form = ContactInfoForm(post_data, instance=contact_info_instance)
             if contact_form.is_valid():
                 contact_form.save()
-        elif active_tab == "payment-info":
+        elif left_active_tab == "payment-info":
             payment_form = PaymentInfoForm(post_data, instance=payment_info_instance)
             if payment_form.is_valid():
                 payment_form.save()
-        elif active_tab == "product-info":
+        elif left_active_tab == "product-info":
             product_form = ProductInfoForm(post_data, instance=product_info_instance)
             if product_form.is_valid():
                 product_form.save()
-        elif active_tab == "phone-info":
+        elif left_active_tab == "phone-info":
             phone_form = PhoneInfoForm(post_data, instance=phone_info_instance)
             if phone_form.is_valid():
                 phone_form.save()
-        elif active_tab == "address-info":
+        elif left_active_tab == "address-info":
             address_form = AddressInfoForm(post_data, instance=address_info_instance)
             if address_form.is_valid():
                 address_form.save()
+        elif right_active_tab == "call-outcome":
+            call_outcome_form = CallOutcomeForm(post_data, instance=call_outcome_instance)
+            if call_outcome_form.is_valid():
+                call_outcome_form.save()
+        context["left_active_tab"] = left_active_tab or "customer-info"
+        context["right_active_tab"] = right_active_tab or "call-outcome"
+        return redirect('alpine-index')
     context.update({
         "customer_form": customer_form,
         "contact_form": contact_form,
@@ -210,6 +218,8 @@ def alpine_index(request: HttpRequest):
         "product_form": product_form,
         "phone_form": phone_form,
         "address_form": address_form,
+        "address_form": address_form,
+        "call_outcome_form": call_outcome_form,
     })
     
     return render(request, "apps/customer/alpine/index.html", context)
@@ -316,6 +326,33 @@ def htmx_payment_info(request: HttpRequest) -> HttpResponse:
         "active_tab": "payment-info",
     }
     return render(request, "apps/customer/htmx/payment_info.html", context)
+
+
+def htmx_call_outcome(request: HttpRequest) -> HttpResponse:
+    call_outcome_instance = init_call_outcome_data()
+    call_outcome_form = CallOutcomeForm(request.POST or None, instance=call_outcome_instance)
+    if request.method == "POST" and call_outcome_form.is_valid():
+        call_outcome_form.save()
+        return redirect('htmx-call-outcome')
+    context = {
+        "form": call_outcome_form,
+        "active_tab": "call-outcome",
+    }
+    return render(request, "apps/customer/htmx/call_outcome.html", context)
+
+
+def htmx_history_all(request: HttpRequest) -> HttpResponse:
+    context = {
+        "active_tab": "history-all",
+    }
+    return render(request, "apps/customer/htmx/history_all.html", context)
+
+
+def htmx_history_limit(request: HttpRequest) -> HttpResponse:
+    context = {
+        "active_tab": "history-limit",
+    }
+    return render(request, "apps/customer/htmx/history_limit.html", context)
 
 
 @api_view(['GET', 'POST'])
