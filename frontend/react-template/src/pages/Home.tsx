@@ -64,7 +64,7 @@ export const Home = () => {
     <ErrorContext.Provider value={{ errorMessage, setErrorMessage }}>
       <div className="flex gap-5 flex-wrap">
         <ErrorBanner />
-        <div>
+        <div style={{ maxWidth: "45%", minWidth: "980px" }}>
           <MultiTabsDashboard
             title="Thông Tin Khách Hàng"
             tabItems={customerTabItems}
@@ -73,7 +73,7 @@ export const Home = () => {
             <CommonFormWrapper title="HIDDEN FOR NORMAL USER"></CommonFormWrapper>
           </div>
         </div>
-        <div>
+        <div style={{ minWidth: "980px", maxWidth: "45%" }}>
           <MultiTabsDashboard title="Section" tabItems={sectionTabItems} />
         </div>
       </div>

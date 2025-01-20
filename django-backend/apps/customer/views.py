@@ -184,7 +184,16 @@ def alpine_index(request: HttpRequest):
         if left_active_tab == "customer-info":
             customer_form = CustomerInfoForm(post_data, instance=customer_info_instance)
             if customer_form.is_valid():
+                context["info-banner"] = {
+                    "error_message": "Success",
+                    "type": "Success"
+                }
                 customer_form.save()
+            else:
+                context["info-banner"] = {
+                    "error_message": "Validation Failed",
+                    "type": "Error"
+                }
         elif left_active_tab == "contact-info":
             contact_form = ContactInfoForm(post_data, instance=contact_info_instance)
             if contact_form.is_valid():
