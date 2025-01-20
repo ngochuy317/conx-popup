@@ -1,8 +1,10 @@
-<form method="POST" action="{% url 'alpine-index' %}">
+<form class="p-2" method="POST" action="{% url 'alpine-index' %}">
     {% csrf_token %}
     <input type="hidden" name="right_active_tab" value="call-outcome">
-    <div class="row mt-2">
-        <div class="col-md-6">
+    <div class="row mt-2 gap-3 mb-5">
+        <div class="col-md-6"
+            style="padding-right: 2rem;padding-left: 2rem;"
+            >
             {% include "common/field/boolean_field_input.html" with field=call_outcome_form.pds %}
             <div class="form-group mb-5 d-flex">
                 <label style="width: 250px;">{{ call_outcome_form.contacted_person.label }}</label>
@@ -24,7 +26,9 @@
             </div>
             
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6"
+            style="padding-right: 2rem;padding-left: 2rem;"
+            >
             {% include "common/field/boolean_field_input.html" with field=call_outcome_form.final %}
             {% include "common/field/textarea_field_input.html" with field=call_outcome_form.note %}
             {% include "common/field/date_field_input.html" with field=call_outcome_form.payment_date %}
