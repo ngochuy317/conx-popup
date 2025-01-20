@@ -119,7 +119,6 @@ export const UserInfo = () => {
               return res.json();
             })
             .then((data: CustomerInfoModel) => {
-              console.log(data);
 
               setErrorMessage({
                 message: "Success",
@@ -128,7 +127,6 @@ export const UserInfo = () => {
               setDefaultValue(data);
             })
             .catch((error) => {
-              console.log("error");
               setErrorMessage({
                 message: "Failed to submit!",
                 type: ToastTypeEnum.FALIED,

@@ -32,7 +32,6 @@ export const ErrorBanner = () => {
     }
   };
 
-  console.log("errorMessage.type", errorMessage.type);
 
   return (
     <div
