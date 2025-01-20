@@ -32,6 +32,8 @@ export const ErrorBanner = () => {
     }
   };
 
+  console.log("errorMessage.type", errorMessage.type);
+
   return (
     <div
       className={`shadow-md ${"bg-" + backgroundColor() + "-100"} w-full flex`}

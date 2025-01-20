@@ -13,7 +13,6 @@ import { BASE_SERVICE_API_URL, CUSTOMER_API_PATH } from "../consts/Constance";
 import { ErrorContext } from "../context/ErrorContext";
 import { ToastTypeEnum } from "../enum/ToastTypeEnum";
 
-
 const formFields: FormField[] = [
   {
     label: "Tên KH",
@@ -113,13 +112,27 @@ export const UserInfo = () => {
             },
             body: JSON.stringify(values),
           })
-            .then((res) => res.json())
+            .then((res) => {
+              if(res.status === 400){
+                throw new Error("Validation Error");
+              }
+              return res.json();
+            })
             .then((data: CustomerInfoModel) => {
-              setErrorMessage({message: "Success", type: ToastTypeEnum.SUCCESS});
+              console.log(data);
+
+              setErrorMessage({
+                message: "Success",
+                type: ToastTypeEnum.SUCCESS,
+              });
               setDefaultValue(data);
             })
             .catch((error) => {
-              setErrorMessage({message: "Failed to submit!", type: ToastTypeEnum.FALIED});
+              console.log("error");
+              setErrorMessage({
+                message: "Failed to submit!",
+                type: ToastTypeEnum.FALIED,
+              });
               console.error("Failed to update data:", error);
             })
             .finally(() => setSubmitting(false));
