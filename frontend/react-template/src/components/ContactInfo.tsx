@@ -187,7 +187,7 @@ export const ContactInfo = () => {
               {formFields.map((field, index) => (
                 <div
                   key={field.name}
-                  className={`mb-4 ${index !== 1 ? "mr-10" : ""}`}
+                  className={`mb-4 ml-10`}
                 >
                   {field.type === "text" && (
                     <CustomTextInput

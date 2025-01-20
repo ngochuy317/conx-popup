@@ -82,7 +82,7 @@ export const CustomTextAreaInput = ({
     setValue(value);
   };
   return (
-    <div>
+    <div style={{width: "26rem"}}>
       {label && (
         <div className="w-20">
           <p className="text-left flex-end text-md">{label}</p>
@@ -90,7 +90,7 @@ export const CustomTextAreaInput = ({
       )}
       <Textarea
         style={{ height: "150px" }}
-        className="border w-80"
+        className="border w-full"
         maxRows={10}
         onChange={handleChange}
         name={name}

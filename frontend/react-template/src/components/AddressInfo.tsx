@@ -90,10 +90,10 @@ export const AddressInfo = () => {
         {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
           <form onSubmit={handleSubmit}>
             <div className="flex flex-wrap">
-              {formFields.map((field, index) => (
+              {formFields.map((field) => (
                 <div
                   key={field.name}
-                  className={`mb-4 ${index !== 1 ? "mr-10" : ""}`}
+                  className={`mb-4 ml-10`}
                 >
                   {field.type === "text" && (
                     <CustomTextInput

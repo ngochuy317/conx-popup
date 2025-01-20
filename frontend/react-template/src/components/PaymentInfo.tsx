@@ -133,7 +133,7 @@ export const PaymentInfo = () => {
           <form onSubmit={handleSubmit}>
             <div className="">
               {formFields.map((field) => (
-                <div key={field.name} className={`mb-4`}>
+                <div key={field.name} className={`mb-4 ml-10`}>
                   {field.type === "text" && (
                     <CustomTextInput
                       required={field.required}

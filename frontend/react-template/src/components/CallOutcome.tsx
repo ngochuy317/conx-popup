@@ -42,7 +42,7 @@ export const CallOutcome = () => {
       label: "ACTION CODE",
       type: "dropdown",
       name: "actionCode",
-      options: ["Action A", "Action B", "Action C"], // Replace with actual options
+      options: ["Action A", "Action B", "Action C", "ACC"], // Replace with actual options
       defaultValue: "",
       required: true,
     },
@@ -50,7 +50,7 @@ export const CallOutcome = () => {
       label: "Reason Code",
       type: "dropdown",
       name: "reasonCode",
-      options: ["Reason A", "Reason B", "Reason C"], // Replace with actual options
+      options: ["Reason A", "Reason B", "Reason C", "TTA"], // Replace with actual options
       defaultValue: "",
       required: true,
     },
@@ -124,10 +124,7 @@ export const CallOutcome = () => {
           <form onSubmit={handleSubmit}>
             <div className="flex flex-wrap">
               {formFields.map((field, index) => (
-                <div
-                  key={field.name}
-                  className={`mb-4 ${index !== 1 ? "mr-10" : ""}`}
-                >
+                <div key={field.name} className={`mb-4 ml-10`}>
                   {field.type === "text" && (
                     <CustomTextInput
                       required={field.required}
@@ -156,12 +153,16 @@ export const CallOutcome = () => {
                       name={field.name}
                       value={values[field.name as keyof CallOutcomeInfoModel]}
                       handleBlur={handleBlur}
-                      defaultValue={field.defaultValue as string}
+                      defaultValue={
+                        defaultValue[
+                          field.name as keyof CallOutcomeInfoModel
+                        ] ?? field.options?.[0]
+                      }
                       options={field.options}
                     />
                   )}
                   {field.type === "checkbox" && (
-                    <div className="w-96 mr-10">
+                    <div style={{ width: "26rem" }}>
                       <CustomCheckbox
                         checked={Boolean(
                           values[field.name as keyof CallOutcomeInfoModel]
