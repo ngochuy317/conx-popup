@@ -184,43 +184,64 @@ def alpine_index(request: HttpRequest):
         if left_active_tab == "customer-info":
             customer_form = CustomerInfoForm(post_data, instance=customer_info_instance)
             if customer_form.is_valid():
-                context["info-banner"] = {
-                    "error_message": "Success",
-                    "type": "Success"
-                }
                 customer_form.save()
+                messages.success(request, 'Form submitted successfully!')
             else:
-                context["info-banner"] = {
-                    "error_message": "Validation Failed",
-                    "type": "Error"
-                }
+                messages.error(request, 'Validation error')
         elif left_active_tab == "contact-info":
             contact_form = ContactInfoForm(post_data, instance=contact_info_instance)
             if contact_form.is_valid():
                 contact_form.save()
+                messages.success(request, 'Form submitted successfully!')
+            else:
+                messages.error(request, 'Validation error')
         elif left_active_tab == "payment-info":
             payment_form = PaymentInfoForm(post_data, instance=payment_info_instance)
             if payment_form.is_valid():
                 payment_form.save()
+                messages.success(request, 'Form submitted successfully!')
+            else:
+                messages.error(request, 'Validation error')
         elif left_active_tab == "product-info":
             product_form = ProductInfoForm(post_data, instance=product_info_instance)
             if product_form.is_valid():
                 product_form.save()
+                messages.success(request, 'Form submitted successfully!')
+            else:
+                messages.error(request, 'Validation error')
         elif left_active_tab == "phone-info":
             phone_form = PhoneInfoForm(post_data, instance=phone_info_instance)
             if phone_form.is_valid():
                 phone_form.save()
+                messages.success(request, 'Form submitted successfully!')
+            else:
+                messages.error(request, 'Validation error')
         elif left_active_tab == "address-info":
             address_form = AddressInfoForm(post_data, instance=address_info_instance)
             if address_form.is_valid():
                 address_form.save()
+                messages.success(request, 'Form submitted successfully!')
+            else:
+                messages.error(request, 'Validation error')
         elif right_active_tab == "call-outcome":
             call_outcome_form = CallOutcomeForm(post_data, instance=call_outcome_instance)
             if call_outcome_form.is_valid():
                 call_outcome_form.save()
+                messages.success(request, 'Form submitted successfully!')
+            else:
+                messages.error(request, 'Validation error')
         context["left_active_tab"] = left_active_tab or "customer-info"
         context["right_active_tab"] = right_active_tab or "call-outcome"
-        return redirect('alpine-index')
+        context.update({
+            "customer_form": customer_form,
+            "contact_form": contact_form,
+            "payment_form": payment_form,
+            "product_form": product_form,
+            "phone_form": phone_form,
+            "address_form": address_form,
+            "call_outcome_form": call_outcome_form,
+        })
+        return render(request, "apps/customer/alpine/index.html", context)
     context.update({
         "customer_form": customer_form,
         "contact_form": contact_form,
@@ -228,10 +249,8 @@ def alpine_index(request: HttpRequest):
         "product_form": product_form,
         "phone_form": phone_form,
         "address_form": address_form,
-        "address_form": address_form,
         "call_outcome_form": call_outcome_form,
     })
-    
     return render(request, "apps/customer/alpine/index.html", context)
 
 
@@ -312,11 +331,11 @@ def htmx_customer_info(request: HttpRequest) -> HttpResponse:
     customer_info_instance = init_customer_info_data()
     customer_form = CustomerInfoForm(request.POST or None, instance=customer_info_instance)
     if request.method == "POST":
-        print("request.POST", request.POST)
         if customer_form.is_valid():
             customer_form.save()
             messages.success(request, 'Form submitted successfully!')
         else:
+            print(customer_form.errors)
             messages.error(request, 'Validation error')
     context = {
         "form": customer_form,
