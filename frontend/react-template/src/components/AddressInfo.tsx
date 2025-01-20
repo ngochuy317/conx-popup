@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { FormField, FormValues } from "../models/FormField";
+import React, { useContext, useEffect, useState } from "react";
+import { FormField } from "../models/FormField";
 import { Button } from "@mui/material";
 import dayjs from "dayjs";
 import { Formik } from "formik";
@@ -10,6 +10,8 @@ import { CustomTextInput } from "./CustomTextInput";
 import * as Yup from "yup";
 import { ADDRESS_API_PATH, BASE_SERVICE_API_URL } from "../consts/Constance";
 import { AddressInfoModel } from "../models/AddressInfoModel";
+import { ErrorContext } from "../context/ErrorContext";
+import { ToastTypeEnum } from "../enum/ToastTypeEnum";
 
 export const AddressInfo = () => {
   const formFields: FormField[] = [
@@ -41,6 +43,8 @@ export const AddressInfo = () => {
   ];
 
   const [defaultValue, setDefaultValue] = useState({} as AddressInfoModel);
+  const { setErrorMessage } = useContext(ErrorContext);
+
   useEffect(() => {
     fetch(BASE_SERVICE_API_URL + ADDRESS_API_PATH).then(async (res) => {
       const data: AddressInfoModel = await res.json();
@@ -81,9 +85,19 @@ export const AddressInfo = () => {
           })
             .then((res) => res.json())
             .then((data: AddressInfoModel) => {
+              setErrorMessage({
+                message: "Success",
+                type: ToastTypeEnum.SUCCESS,
+              });
               setDefaultValue(data);
             })
-            .catch((error) => console.error("Failed to update data:", error))
+            .catch((error) => {
+              setErrorMessage({
+                message: "Failed to submit!",
+                type: ToastTypeEnum.FALIED,
+              });
+              console.error("Failed to update data:", error);
+            })
             .finally(() => setSubmitting(false));
         }}
       >
@@ -91,10 +105,7 @@ export const AddressInfo = () => {
           <form onSubmit={handleSubmit}>
             <div className="flex flex-wrap">
               {formFields.map((field) => (
-                <div
-                  key={field.name}
-                  className={`mb-4 ml-10`}
-                >
+                <div key={field.name} className={`mb-4 ml-10`}>
                   {field.type === "text" && (
                     <CustomTextInput
                       required={field.required}

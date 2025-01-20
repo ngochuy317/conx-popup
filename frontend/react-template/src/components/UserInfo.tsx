@@ -7,9 +7,12 @@ import { CustomDateInput } from "./CustomDateInput";
 import dayjs from "dayjs";
 import { CustomDropdownInput } from "./CustomDropdownInput";
 import { FormField } from "../models/FormField";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { CustomerInfoModel } from "../models/CustomerInfoModel";
 import { BASE_SERVICE_API_URL, CUSTOMER_API_PATH } from "../consts/Constance";
+import { ErrorContext } from "../context/ErrorContext";
+import { ToastTypeEnum } from "../enum/ToastTypeEnum";
+
 
 const formFields: FormField[] = [
   {
@@ -77,6 +80,8 @@ export const UserInfo = () => {
     });
   }, []);
 
+  const { setErrorMessage } = useContext(ErrorContext);
+
   if (!defaultValue) {
     return <div>Loading...</div>;
   }
@@ -110,9 +115,13 @@ export const UserInfo = () => {
           })
             .then((res) => res.json())
             .then((data: CustomerInfoModel) => {
+              setErrorMessage({message: "Success", type: ToastTypeEnum.SUCCESS});
               setDefaultValue(data);
             })
-            .catch((error) => console.error("Failed to update data:", error))
+            .catch((error) => {
+              setErrorMessage({message: "Failed to submit!", type: ToastTypeEnum.FALIED});
+              console.error("Failed to update data:", error);
+            })
             .finally(() => setSubmitting(false));
         }}
       >
@@ -120,10 +129,7 @@ export const UserInfo = () => {
           <form onSubmit={handleSubmit}>
             <div className="flex flex-wrap">
               {formFields.map((field) => (
-                <div
-                  key={field.name}
-                  className={`mb-4 ml-10`}
-                >
+                <div key={field.name} className={`mb-4 ml-10`}>
                   {field.type === "text" && (
                     <CustomTextInput
                       required={field.required}
@@ -148,7 +154,8 @@ export const UserInfo = () => {
                   {field.type === "dropdown" && (
                     <CustomDropdownInput
                       defaultValue={
-                        defaultValue[field.name as keyof CustomerInfoModel] ?? "Male"
+                        defaultValue[field.name as keyof CustomerInfoModel] ??
+                        "Male"
                       }
                       required={field.required}
                       label={field.label}

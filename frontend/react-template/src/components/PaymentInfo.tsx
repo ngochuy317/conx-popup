@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FormField } from "../models/FormField";
 import * as Yup from "yup";
 import { Button } from "@mui/material";
@@ -10,9 +10,13 @@ import { CustomDropdownInput } from "./CustomDropdownInput";
 import { CustomTextInput } from "./CustomTextInput";
 import { PaymentInfoModel } from "../models/PaymentInfoModel";
 import { BASE_SERVICE_API_URL, PAYMENT_API_PATH } from "../consts/Constance";
+import { ErrorContext } from "../context/ErrorContext";
+import { ToastTypeEnum } from "../enum/ToastTypeEnum";
 
 export const PaymentInfo = () => {
   const [defaultValue, setDefaultValue] = useState({} as PaymentInfoModel);
+  const { setErrorMessage } = useContext(ErrorContext);
+
   useEffect(() => {
     fetch(BASE_SERVICE_API_URL + PAYMENT_API_PATH).then(async (res) => {
       const data: PaymentInfoModel = await res.json();
@@ -123,9 +127,20 @@ export const PaymentInfo = () => {
           })
             .then((res) => res.json())
             .then((data: PaymentInfoModel) => {
+              setErrorMessage({
+                message: "Success",
+                type: ToastTypeEnum.SUCCESS,
+              });
+
               setDefaultValue(data);
             })
-            .catch((error) => console.error("Failed to update data:", error))
+            .catch((error) => {
+              setErrorMessage({
+                message: "Failed to submit!",
+                type: ToastTypeEnum.FALIED,
+              });
+              console.error("Failed to update data:", error);
+            })
             .finally(() => setSubmitting(false));
         }}
       >

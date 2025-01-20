@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CommonFormWrapper } from "./CommonFormWrapper";
 import { Button } from "@mui/material";
 import dayjs from "dayjs";
@@ -10,6 +10,8 @@ import { CustomDropdownInput } from "./CustomDropdownInput";
 import { CustomTextInput } from "./CustomTextInput";
 import { FormField } from "../models/FormField";
 import { PhoneInfoModel } from "../models/PhoneInfoModel";
+import { ErrorContext } from "../context/ErrorContext";
+import { ToastTypeEnum } from "../enum/ToastTypeEnum";
 
 export const PhoneInfo = () => {
   const formFields: FormField[] = [
@@ -86,7 +88,8 @@ export const PhoneInfo = () => {
       defaultValue: "",
     },
   ];
-  
+
+  const { setErrorMessage } = useContext(ErrorContext);
 
   const [defaultValue, setDefaultValue] = useState({} as PhoneInfoModel);
   useEffect(() => {
@@ -95,7 +98,6 @@ export const PhoneInfo = () => {
       setDefaultValue(data);
     });
   }, []);
-
 
   const validationSchema = Yup.object(
     formFields.reduce((schema, field) => {
@@ -113,7 +115,7 @@ export const PhoneInfo = () => {
   if (!defaultValue) {
     return <div>Loading...</div>;
   }
-  
+
   return (
     <CommonFormWrapper title="Phone Info">
       <Formik
@@ -130,9 +132,19 @@ export const PhoneInfo = () => {
           })
             .then((res) => res.json())
             .then((data: PhoneInfoModel) => {
+              setErrorMessage({
+                message: "Success",
+                type: ToastTypeEnum.SUCCESS,
+              });
               setDefaultValue(data);
             })
-            .catch((error) => console.error("Failed to update data:", error))
+            .catch((error) => {
+              setErrorMessage({
+                message: "Failed to submit!",
+                type: ToastTypeEnum.FALIED,
+              });
+              console.error("Failed to update data:", error);
+            })
             .finally(() => setSubmitting(false));
         }}
       >
@@ -140,10 +152,7 @@ export const PhoneInfo = () => {
           <form onSubmit={handleSubmit}>
             <div className="flex flex-wrap">
               {formFields.map((field, index) => (
-                <div
-                  key={field.name}
-                  className={`mb-4 ml-10`}
-                >
+                <div key={field.name} className={`mb-4 ml-10`}>
                   {field.type === "text" && (
                     <CustomTextInput
                       required={field.required}
@@ -159,9 +168,7 @@ export const PhoneInfo = () => {
                       required={field.required}
                       label={field.label}
                       name={field.name}
-                      value={dayjs(
-                        values[field.name as keyof PhoneInfoModel]
-                      )}
+                      value={dayjs(values[field.name as keyof PhoneInfoModel])}
                       handleBlur={handleBlur}
                     />
                   )}

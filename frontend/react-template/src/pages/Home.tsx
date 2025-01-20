@@ -9,8 +9,14 @@ import { MultiTabsDashboard } from "../components/MultiTabsDashboard";
 import { CallOutcome } from "../components/CallOutcome";
 import { HistoryLimit } from "../components/HistoryLimit";
 import { HistoryAll } from "../components/HistoryAll";
+import { ErrorBanner } from "../components/ErrorBanner";
+import { ErrorContext, ToastMessageProps } from "../context/ErrorContext";
+import { useState } from "react";
+import { ToastTypeEnum } from "../enum/ToastTypeEnum";
 
 export const Home = () => {
+  const [errorMessage, setErrorMessage] = useState({} as ToastMessageProps);
+
   const customerTabItems = [
     { value: "user-info", label: "Customer Info", component: <UserInfo /> },
     {
@@ -55,19 +61,22 @@ export const Home = () => {
   ];
 
   return (
-    <div className="flex gap-5 flex-wrap">
-      <div>
-        <MultiTabsDashboard
-          title="Thông Tin Khách Hàng"
-          tabItems={customerTabItems}
-        />
-        <div className="mt-5">
-          <CommonFormWrapper title="HIDDEN FOR NORMAL USER"></CommonFormWrapper>
+    <ErrorContext.Provider value={{ errorMessage, setErrorMessage }}>
+      <div className="flex gap-5 flex-wrap">
+        <ErrorBanner />
+        <div>
+          <MultiTabsDashboard
+            title="Thông Tin Khách Hàng"
+            tabItems={customerTabItems}
+          />
+          <div className="mt-5">
+            <CommonFormWrapper title="HIDDEN FOR NORMAL USER"></CommonFormWrapper>
+          </div>
+        </div>
+        <div>
+          <MultiTabsDashboard title="Section" tabItems={sectionTabItems} />
         </div>
       </div>
-      <div>
-        <MultiTabsDashboard title="Section" tabItems={sectionTabItems} />
-      </div>
-    </div>
+    </ErrorContext.Provider>
   );
 };

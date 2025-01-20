@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CommonFormWrapper } from "./CommonFormWrapper";
 import * as Yup from "yup";
 import { FormField } from "../models/FormField";
@@ -10,6 +10,8 @@ import { CustomDropdownInput } from "./CustomDropdownInput";
 import { CustomTextInput } from "./CustomTextInput";
 import { BASE_SERVICE_API_URL, CONTACT_API_PATH } from "../consts/Constance";
 import { ContactInfoModel } from "../models/ContactInfoModel";
+import { ErrorContext } from "../context/ErrorContext";
+import { ToastTypeEnum } from "../enum/ToastTypeEnum";
 
 export const ContactInfo = () => {
   const formFields: FormField[] = [
@@ -134,13 +136,14 @@ export const ContactInfo = () => {
   ];
 
   const [defaultValue, setDefaultValue] = useState({} as ContactInfoModel);
+  const { setErrorMessage } = useContext(ErrorContext);
+
   useEffect(() => {
     fetch(BASE_SERVICE_API_URL + CONTACT_API_PATH).then(async (res) => {
       const data: ContactInfoModel = await res.json();
       setDefaultValue(data);
     });
   }, []);
-
 
   const validationSchema = Yup.object(
     formFields.reduce((schema, field) => {
@@ -158,7 +161,7 @@ export const ContactInfo = () => {
   if (!defaultValue) {
     return <div>Loading...</div>;
   }
-  
+
   return (
     <CommonFormWrapper title="Contact Info">
       <Formik
@@ -175,9 +178,19 @@ export const ContactInfo = () => {
           })
             .then((res) => res.json())
             .then((data: ContactInfoModel) => {
+              setErrorMessage({
+                message: "Success",
+                type: ToastTypeEnum.SUCCESS,
+              });
               setDefaultValue(data);
             })
-            .catch((error) => console.error("Failed to update data:", error))
+            .catch((error) => {
+              setErrorMessage({
+                message: "Failed to submit!",
+                type: ToastTypeEnum.FALIED,
+              });
+              console.error("Failed to update data:", error);
+            })
             .finally(() => setSubmitting(false));
         }}
       >
@@ -185,10 +198,7 @@ export const ContactInfo = () => {
           <form onSubmit={handleSubmit}>
             <div className="flex flex-wrap">
               {formFields.map((field, index) => (
-                <div
-                  key={field.name}
-                  className={`mb-4 ml-10`}
-                >
+                <div key={field.name} className={`mb-4 ml-10`}>
                   {field.type === "text" && (
                     <CustomTextInput
                       required={field.required}
@@ -217,7 +227,9 @@ export const ContactInfo = () => {
                       name={field.name}
                       value={values[field.name as keyof ContactInfoModel]}
                       handleBlur={handleBlur}
-                      defaultValue={defaultValue[field.name as keyof ContactInfoModel]}
+                      defaultValue={
+                        defaultValue[field.name as keyof ContactInfoModel]
+                      }
                       options={field.options}
                     />
                   )}
