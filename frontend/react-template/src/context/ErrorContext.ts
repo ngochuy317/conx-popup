@@ -13,7 +13,7 @@ export interface ErrorContextType {
 
 export const ErrorContext = createContext<ErrorContextType>({
   errorMessage: {
-    type: ToastTypeEnum.FALIED,
+    type: ToastTypeEnum.FAILED,
     message: "",
   } as ToastMessageProps,
   setErrorMessage: () => {}, // Default placeholder function

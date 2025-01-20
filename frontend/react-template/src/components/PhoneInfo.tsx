@@ -141,7 +141,7 @@ export const PhoneInfo = () => {
             .catch((error) => {
               setErrorMessage({
                 message: "Failed to submit!",
-                type: ToastTypeEnum.FALIED,
+                type: ToastTypeEnum.FAILED,
               });
               console.error("Failed to update data:", error);
             })
