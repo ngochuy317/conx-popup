@@ -35,7 +35,7 @@ class ProductInfoForm(forms.ModelForm):
 class CustomerInfoForm(forms.ModelForm):
     name = forms.CharField(required=False, label="Tên KH")
     id_number = forms.CharField(max_length=20, label="CCCD")
-    day_of_birth = forms.DateField(label="Ngày sinh", required=False, widget=forms.DateInput(format='%d/%m/%Y'))
+    day_of_birth = forms.DateField(label="Ngày sinh", required=False)
     gender = forms.CharField(label="Giới tính", required=False)
     contract_number = forms.CharField(label="Số hợp đồng", required=False)
     company_name = forms.CharField(label="Tên công ty", required=False)
@@ -46,6 +46,10 @@ class CustomerInfoForm(forms.ModelForm):
     class Meta:
         model = CustomerInfo
         fields = '__all__'
+
+    # def clean_day_of_birth(self):
+    #     day_of_birth = self.cleaned_data['day_of_birth']
+    #     return day_of_birth.strftime('%d/%m/%Y') if day_of_birth else None
 
 
 class ContactInfoForm(forms.ModelForm):

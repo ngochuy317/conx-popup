@@ -7,7 +7,9 @@
     <div class="p-2 border primary_background_color d-flex item-center">
       <span class="lh-sm fw-semibold fs-5">THÔNG TIN KHÁCH HÀNG</span>
     </div>
-
+    <div id="messages-container">
+      {% include 'apps/customer/htmx/messages.html' %}
+    </div>
     <ul class="d-flex list-inline fs-6 p-2 pb-0 border-bottom text-center">
       <li
         style="width: 250px; font-size: smaller"
@@ -92,6 +94,9 @@
     <div class="p-2 border primary_background_color d-flex item-center">
       <span class="lh-sm fw-semibold fs-5">Section</span>
     </div>
+    <div id="messages-container-right">
+      {% include 'apps/customer/htmx/messages.html' %}
+    </div>
     <ul class="d-flex list-inline fs-6 p-2 pb-0 border-bottom text-center">
       <li
         style="width: 250px; font-size: smaller"
@@ -139,6 +144,8 @@
 <script>
 
   document.body.addEventListener('htmx:xhr:loadend', function (event) {
+    console.log("Adwadawd");
+    // const leftActiveTab = {{ left_active_tab }};
     if (event.target?.getAttribute('hx-target') === '#left-tab-content') {
       document.querySelectorAll("#leftTab .tab").forEach((tab) => tab.classList.remove("active_tab"));
       event.target.classList.add("active_tab");

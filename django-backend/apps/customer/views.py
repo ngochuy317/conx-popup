@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 
@@ -252,93 +253,115 @@ def htmx_index(request: HttpRequest):
 def htmx_phone_info(request: HttpRequest) -> HttpResponse:
     phone_info_instance = init_phone_info_data()
     phone_form = PhoneInfoForm(request.POST or None, instance=phone_info_instance)
-    if request.method == "POST" and phone_form.is_valid():
-        phone_form.save()
-        return redirect('htmx-phone-info')
+    if request.method == "POST":
+        if phone_form.is_valid():
+            phone_form.save()
+            messages.success(request, 'Form submitted successfully!')
+        else:
+            messages.error(request, 'Validation error')
     context = {
         "form": phone_form,
         "active_tab": "phone-info",
     }
-    return render(request, "apps/customer/htmx/phone_info.html", context)
+    return render(request, "apps/customer/htmx/multi_update_phone.html", context)
 
 
 def htmx_product_info(request: HttpRequest) -> HttpResponse:
     product_info_instance = init_product_info_data()
     product_form = ProductInfoForm(request.POST or None, instance=product_info_instance)
-    if request.method == "POST" and product_form.is_valid():
-        product_form.save()
-        return redirect('htmx-product-info')
+    if request.method == "POST":
+        if product_form.is_valid():
+            product_form.save()
+            messages.success(request, 'Form submitted successfully!')
+        else:
+            messages.error(request, 'Validation error')
     context = {
         "form": product_form,
         "active_tab": "product-info",
     }
-    return render(request, "apps/customer/htmx/product_info.html", context)
+    return render(request, "apps/customer/htmx/multi_update_product.html", context)
 
 
 def htmx_contact_info(request: HttpRequest) -> HttpResponse:
     contact_info_instance = init_contact_info_data()
     contact_form = ContactInfoForm(request.POST or None, instance=contact_info_instance)
-    if request.method == "POST" and contact_form.is_valid():
-        contact_form.save()
-        return redirect('htmx-contact-info')
+    if request.method == "POST":
+        if contact_form.is_valid():
+            contact_form.save()
+            messages.success(request, 'Form submitted successfully!')
+        else:
+            messages.error(request, 'Validation error')
     context = {
         "form": contact_form,
         "active_tab": "contact-info",
     }
     
-    return render(request, "apps/customer/htmx/contact_info.html", context)
+    return render(request, "apps/customer/htmx/multi_update_contact.html", context)
 
 
 def htmx_customer_info(request: HttpRequest) -> HttpResponse:
     customer_info_instance = init_customer_info_data()
     customer_form = CustomerInfoForm(request.POST or None, instance=customer_info_instance)
-    if request.method == "POST" and customer_form.is_valid():
-        customer_form.save()
-        return redirect('htmx-customer-info')
+    if request.method == "POST":
+        print("request.POST", request.POST)
+        if customer_form.is_valid():
+            customer_form.save()
+            messages.success(request, 'Form submitted successfully!')
+        else:
+            messages.error(request, 'Validation error')
     context = {
         "form": customer_form,
         "active_tab": "customer-info",
     }
-    return render(request, "apps/customer/htmx/customer_info.html", context)
+    return render(request, "apps/customer/htmx/multi_update_customer.html", context)
 
 
 def htmx_address_info(request: HttpRequest) -> HttpResponse:
     address_info_instance = init_address_info_data()
     address_form = AddressInfoForm(request.POST or None, instance=address_info_instance)
-    if request.method == "POST" and address_form.is_valid():
-        address_form.save()
-        return redirect('htmx-address-info')
+    if request.method == "POST":
+        if address_form.is_valid():
+            address_form.save()
+            messages.success(request, 'Form submitted successfully!')
+        else:
+            messages.error(request, 'Validation error')
     context = {
         "form": address_form,
         "active_tab": "address-info",
     }
-    return render(request, "apps/customer/htmx/address_info.html", context)
+    return render(request, "apps/customer/htmx/multi_update_address.html", context)
 
 
 def htmx_payment_info(request: HttpRequest) -> HttpResponse:
     payment_info_instance = init_payment_info_data()
     payment_form = PaymentInfoForm(request.POST or None, instance=payment_info_instance)
-    if request.method == "POST" and payment_form.is_valid():
-        payment_form.save()
-        return redirect('htmx-payment-info')
+    if request.method == "POST":
+        if payment_form.is_valid():
+            payment_form.save()
+            messages.success(request, 'Form submitted successfully!')
+        else:
+            messages.error(request, 'Validation error')
     context = {
         "form": payment_form,
         "active_tab": "payment-info",
     }
-    return render(request, "apps/customer/htmx/payment_info.html", context)
+    return render(request, "apps/customer/htmx/multi_update_payment.html", context)
 
 
 def htmx_call_outcome(request: HttpRequest) -> HttpResponse:
     call_outcome_instance = init_call_outcome_data()
     call_outcome_form = CallOutcomeForm(request.POST or None, instance=call_outcome_instance)
-    if request.method == "POST" and call_outcome_form.is_valid():
-        call_outcome_form.save()
-        return redirect('htmx-call-outcome')
+    if request.method == "POST":
+        if call_outcome_form.is_valid():
+            call_outcome_form.save()
+            messages.success(request, 'Form submitted successfully!')
+        else:
+            messages.error(request, 'Validation error')
     context = {
         "form": call_outcome_form,
         "active_tab": "call-outcome",
     }
-    return render(request, "apps/customer/htmx/call_outcome.html", context)
+    return render(request, "apps/customer/htmx/multi_update_call_outcome.html", context)
 
 
 def htmx_history_all(request: HttpRequest) -> HttpResponse:
