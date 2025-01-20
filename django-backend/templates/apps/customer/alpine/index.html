@@ -7,9 +7,11 @@
       <div class="p-2 border primary_background_color d-flex item-center">
         <span class="lh-sm fw-semibold fs-5">THÔNG TIN KHÁCH HÀNG</span>
       </div>
-      <div id="messages-container">
-        {% include 'apps/customer/alpine/messages.html' %}
-      </div>
+      {% if error_message == 'left' %}
+        <div id="messages-container">
+          {% include 'apps/customer/alpine/messages.html' %}
+        </div>
+      {% endif %}
       <ul class="d-flex list-inline fs-6 p-2 pb-0 border-bottom text-center">
         <li
           @click="$store.leftActiveTab.current = 'customer-info'"
@@ -103,6 +105,11 @@
       <div class="p-2 border primary_background_color d-flex item-center">
       <span class="lh-sm fw-semibold fs-5">Section</span>
       </div>
+      {% if error_message == 'right' %}
+        <div id="messages-container-right">
+          {% include 'apps/customer/htmx/messages.html' %}
+        </div>
+      {% endif %}
       <ul class="d-flex list-inline fs-6 p-2 pb-0 border-bottom text-center">
         <li
           @click="$store.rightActiveTab.current = 'call-outcome'"

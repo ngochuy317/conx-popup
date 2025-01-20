@@ -232,6 +232,12 @@ def alpine_index(request: HttpRequest):
                 messages.error(request, 'Validation error')
         context["left_active_tab"] = left_active_tab or "customer-info"
         context["right_active_tab"] = right_active_tab or "call-outcome"
+        error_message_display_position = None
+        if left_active_tab:
+            error_message_display_position = "left"
+        if right_active_tab:
+            error_message_display_position = "right"
+        context["error_message"] = error_message_display_position
         context.update({
             "customer_form": customer_form,
             "contact_form": contact_form,
